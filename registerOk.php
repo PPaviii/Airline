@@ -1,15 +1,38 @@
 <?php
 
-session_start();
-
 if (isset($_POST["user"]) && isset($_POST["pass"])) {
+
+    $servername = "localhost";
+    $username = "s264970";
+    $password = "chalingt";
+
+    $conn = new mysqli($servername, $username, $password, "s264970");
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
     $username = $_POST["user"];
     $password = password_hash($_POST["pass"], PASSWORD_BCRYPT);
 
-    echo "<script type='text/javascript'>";
-    echo "window.alert('Registration completed successfully');";
-    echo "window.location = 'index.php';";
-    echo "</script>";
+    $sql = "INSERT INTO User (Username, Password) VALUES ('" . $username . "', '" .$password . "')";
+
+    if ($conn->query($sql) === TRUE) {
+        $conn->close();
+        echo "<script type='text/javascript'>";
+        echo "window.alert('Registration completed successfully');";
+        echo "window.location.replace('index.php');";
+        echo "</script>";
+    }else if(mysqli_errno($conn) === 1062){
+        $conn->close();
+        echo "<script type='text/javascript'>";
+        echo "window.alert('The username you inserted already exists. Try again.');";
+        echo "window.location.replace('register.php');";
+        echo "</script>";
+    }else{
+        echo "Error: <br>" . $conn->error;
+        echo "<br><a href='register.php'>Return to the register page</a>";
+    }
 
 }else{
     echo "<h2>A problem has occurred</h2>";

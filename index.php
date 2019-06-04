@@ -35,7 +35,6 @@ if ($conn->connect_error) {
 }
 //end db
 
-
 //table of seats
 echo "<table>";
 echo "<tr>";
