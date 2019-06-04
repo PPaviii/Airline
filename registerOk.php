@@ -13,11 +13,16 @@ if (isset($_POST["user"]) && isset($_POST["pass"])) {
     }
 
     $username = $_POST["user"];
-    $password = password_hash($_POST["pass"], PASSWORD_BCRYPT);
+    $password = password_hash($_POST["pass"], PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO User (Username, Password) VALUES ('" . $username . "', '" .$password . "')";
+    $sql = "INSERT INTO User (Username, Password) VALUES ('" . $username . "', '" . $password . "')";
 
     if ($conn->query($sql) === TRUE) {
+
+        session_start();
+        $_SESSION["logged"] = 1; //the user is now logged in
+        session_write_close(); //"lock is released"
+
         $conn->close();
         echo "<script type='text/javascript'>";
         echo "window.alert('Registration completed successfully');";
@@ -30,6 +35,7 @@ if (isset($_POST["user"]) && isset($_POST["pass"])) {
         echo "window.location.replace('register.php');";
         echo "</script>";
     }else{
+        $conn->close();
         echo "Error: <br>" . $conn->error;
         echo "<br><a href='register.php'>Return to the register page</a>";
     }

@@ -11,6 +11,20 @@
 
 <?php
 
+session_start();
+$_SESSION["error"] = 0; //flush previous error in the login form
+
+if(!isset($_SESSION["logged"])){
+    $_SESSION["logged"] = 0;
+}
+
+if(isset($_POST["lout"]) && $_POST["lout"] == 1){
+    $_SESSION["logged"] = 0;
+    $_SESSION["error"] = 0;
+    header("HTTP/1.1 303 See Other");
+    header("Location: index.php");
+}
+
 /*
     status legend:
         - 0: free
@@ -18,12 +32,9 @@
         - 2: occupied
 */
 
-//instance varibles
 $rows = 10; //places
 $columns = 6; //seats
-//end instance
 
-//db
 $servername = "localhost";
 $username = "s264970";
 $password = "chalingt";
@@ -33,9 +44,7 @@ $conn = new mysqli($servername, $username, $password, "s264970");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-//end db
 
-//table of seats
 echo "<table>";
 echo "<tr>";
 echo "<th></th>";
@@ -54,9 +63,7 @@ for($i = 1; $i <= $rows; $i++){
     echo "</tr>";
 }
 echo "</table>";
-//end table
 
-//queries for seat statistics
 $free = "SELECT COUNT(*) AS Free FROM Seat WHERE Status = 0";
 $reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 1";
 $occupied = "SELECT COUNT(*) AS Occ FROM Seat WHERE Status = 2";
@@ -69,12 +76,22 @@ $resOcc = $conn->query($occupied);
 $rowFree = $resFree->fetch_assoc();
 $rowRes = $resRes->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
-//end queries
 
 echo "<br><p>Number of available seats: " . $rowFree["Free"] . "</p>";
 echo "<br><p>Number of reserved seats: " . $rowRes["Reserved"] . "</p>";
 echo "<br><p>Number of occupied seats: " . $rowOcc["Occ"] . "</p>";
 echo "<br><p>Total number of seats: $total</p>";
+
+if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
+    echo "<form action='index.php' method='post'>";
+    echo "<br><p style='color: green'>Now you are logged in and you can purchase airplane seats.</p><br>";
+    echo "<input type=\"hidden\" value=\"1\" name=\"lout\">";
+    echo "<button type=\"submit\" name=\"submit\" formaction='index.php'>Log Out</button><br>";
+    echo "</form>";
+}else{
+    echo "<br><a href='login.php'>Sign In</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+    echo "<a href='register.php'>Sign Up</a>";
+}
 
 ?>
 

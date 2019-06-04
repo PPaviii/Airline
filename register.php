@@ -12,7 +12,7 @@
 
 <form id="register" action='registerOk.php' method='post' onsubmit="return check();">
     <p>
-    <label for="user">E-mail</label>
+    <label for="user">E-mail:</label>
     <input type="email" name="user" id="name" placeholder="john@doe.us" style="text-align: center">
     </p><br>
 

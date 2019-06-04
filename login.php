@@ -1,44 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<h2>Sign In</h2>
+
 <?php
 
-if($_SESSION["logged"] == 0) {
+session_start();
 
-    if (!isset($_POST["user"]) && !isset($_POST["pass"])) {
-
-        echo "<p>You must be logged in to purchase a seat. Insert your credentials in the form below.</p><br>";
-
-        echo "<form action='buy.php' method='post'>";
-        echo "<p>";
-        echo "<label for=\"user\">Username:</label>";
-        echo "<input type=\"text\" name=\"user\" id=\"name\" style=\"text-align: center\">";
-        echo "</p><br>";
-
-        echo "<p>";
-        echo "<label for=\"pass\">Password:</label>";
-        echo "<input type=\"password\" name=\"pass\" id=\"name\" style=\"text-align: center\">";
-        echo "</p><br>";
-
-        echo "<button type=\"submit\" name=\"submit\">Submit Credentials</button><br><br>";
-        echo "</form>";
-
-        if (isset($_SESSION["error"]) && $_SESSION["error"] == 1) {
-            echo "<p style='color: red'>Error: wrong username or password. Retry.</p><br>";
-        }
-
-        return;
-
-    } else {
-        $log = "SELECT * FROM User WHERE Username = '" . $_POST["user"] . "' AND Password = '" . md5($_POST["pass"]) . "'";
-        $res = $conn->query($log);
-        $rows = mysqli_num_rows($res);
-
-        if ($rows == 1) {
-            $_SESSION["logged"] = 1;
-            header("Location: index.php");
-        } else {
-            $_SESSION["error"] = 1;
-            header("Location: buy.php");
-        }
-    }
+if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
+    echo "<h2>You are already logged in</h2>";
+    echo "<a href='index.php'>Return to the Home page</a>";
+    return;
 }
 
 ?>
+
+<form id="login" action='loginOk.php' method='post'>
+    <p>
+        <label for="user">E-mail:</label>
+        <input type="email" name="user" id="name" placeholder="john@doe.us" style="text-align: center">
+    </p><br>
+
+    <p>
+        <label for="pass">Password:&nbsp;&nbsp;</label>
+        <input type="password" name="pass" id="pass" placeholder="********" style="text-align: center">
+    </p><br>
+
+    <button type="submit" name="submit">Sign In</button><br><br>
+</form>
+
+<?php
+
+if (isset($_SESSION["error"]) && $_SESSION["error"] == 1) {
+    echo "<p style='color: red'>Error: wrong username or password. Retry.</p><br>";
+}
+
+?>
+
+</body>
+</html>
