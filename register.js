@@ -3,15 +3,26 @@ function check(){
     let formParam = document.getElementById("register");
 
     let mail = formParam.elements[0].value;
-    let password = formParam.elements[1].value;
+    let password1 = formParam.elements[1].value;
+    let password2 = formParam.elements[2].value;
+
+    if(password1 !== password2){
+        window.alert("The two passwords you inserted are different. Try again");
+        document.getElementById("pass1").value = "";
+        document.getElementById("pass1").style.borderColor = 'red';
+        document.getElementById("pass2").value = "";
+        document.getElementById("pass2").style.borderColor = 'red';
+        return false;
+    }
 
     let resultEmail = validateEmail(mail);
-    let resultPassword = validatePassword(password);
+    let resultPassword = validatePassword(password1);
 
     if(resultEmail === false || resultPassword === false){
         window.alert("Your username or password do not respect the registration policies. Try again");
         document.getElementById("name").value = "";
-        document.getElementById("pass").value = "";
+        document.getElementById("pass1").value = "";
+        document.getElementById("pass2").value = "";
         return false;
     }else{
         return true;

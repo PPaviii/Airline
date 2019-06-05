@@ -17,8 +17,13 @@
     </p><br>
 
     <p>
-    <label for="pass">Password:&nbsp;&nbsp;</label>
-    <input type="password" name="pass" id="pass" placeholder="********" style="text-align: center">
+    <label for="pass">Password:</label>
+    <input type="password" name="pass1" id="pass1" placeholder="********" style="text-align: center">
+    </p><br>
+
+    <p>
+        <label for="pass">Repeat Password:&nbsp;&nbsp;</label>
+        <input type="password" name="pass2" id="pass2" placeholder="********" style="text-align: center">
     </p><br>
 
     <button type="submit" name="submit">Sign Up</button><br><br>

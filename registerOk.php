@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST["user"]) && isset($_POST["pass"])) {
+if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
 
     $servername = "localhost";
     $username = "s264970";
@@ -13,7 +13,7 @@ if (isset($_POST["user"]) && isset($_POST["pass"])) {
     }
 
     $username = $_POST["user"];
-    $password = password_hash($_POST["pass"], PASSWORD_DEFAULT);
+    $password = password_hash($_POST["pass1"], PASSWORD_DEFAULT);
 
     $sql = "INSERT INTO User (Username, Password) VALUES ('" . $username . "', '" . $password . "')";
 
