@@ -30,7 +30,7 @@ if($_SESSION["logged"] == 0) {
                 $_SESSION["logged"] = 1;
                 $_SESSION["error"] = 0;
                 header("HTTP/1.1 303 See Other");
-                header("Location: PersonalPage.php");
+                header("Location: personalPage.php");
             } else {
                 $_SESSION["error"] = 1;
                 header("HTTP/1.1 303 See Other");

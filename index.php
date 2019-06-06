@@ -18,6 +18,13 @@ if(!isset($_SESSION["logged"])){
     $_SESSION["logged"] = 0;
 }
 
+if(isset($_POST["lout"]) && $_POST["lout"] == 1){
+    $_SESSION["logged"] = 0;
+    $_SESSION["error"] = 0;
+    header("HTTP/1.1 303 See Other");
+    header("Location: index.php");
+}
+
 /*
     status legend:
         - 0: free
