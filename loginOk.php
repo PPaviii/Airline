@@ -1,6 +1,10 @@
 <?php
 
+include "phpFunctions.php";
+
 session_start();
+
+isLoginSessionExpired();
 
 if($_SESSION["logged"] == 0) {
 
@@ -29,6 +33,10 @@ if($_SESSION["logged"] == 0) {
             if (password_verify($_POST["pass"], $nRow["Password"])) {
                 $_SESSION["logged"] = 1;
                 $_SESSION["error"] = 0;
+
+                $_SESSION["username"] = $_POST["user"];
+                $_SESSION["logged_time"] = time();
+
                 header("HTTP/1.1 303 See Other");
                 header("Location: personalPage.php");
             } else {

@@ -3,7 +3,3 @@ table, th, td {border: 1px solid black;}
 th, td {text-align: center;}
 th, td {padding: 2px;}
 th {background-color: lightgrey}
-form  { display: table;      }
-p     { display: table-row;  }
-label { display: table-cell; }
-input { display: table-cell; }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Airline Personal Home Page</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
 </head>
 <body>
 
@@ -11,7 +11,18 @@
 
 <?php
 
+include "phpFunctions.php";
+
 session_start();
+
+isLoginSessionExpired();
+
+if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0){
+    $_SESSION["logged"] = 0;
+    header("HTTP/1.1 303 See Other");
+    header("Location: login.php");
+}
+
 $_SESSION["error"] = 0; //flush previous error in the login form
 
 /*
@@ -35,19 +46,12 @@ if ($conn->connect_error) {
 }
 
 echo "<table>";
-echo "<tr>";
-echo "<th></th>";
-
-for ($x = ord('A'); $x < ord('A') + $columns; $x++) {
-    echo "<th>" . chr($x) ."</th>";
-}
 
 echo "</tr>";
 for($i = 1; $i <= $rows; $i++){
     echo"<tr>";
-    echo "<th>$i</th>";
-    for($j = 1; $j <= $columns; $j++){
-        echo "<td><a>Posto</a></td>";
+    for($x = ord('A'); $x < ord('A') + $columns; $x++){
+        echo "<td>" . $i . chr($x) . "</td>";
     }
     echo "</tr>";
 }
@@ -66,19 +70,20 @@ $rowFree = $resFree->fetch_assoc();
 $rowRes = $resRes->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
-echo "<br><p>Number of available seats: " . $rowFree["Free"] . "</p>";
-echo "<br><p>Number of reserved seats: " . $rowRes["Reserved"] . "</p>";
-echo "<br><p>Number of occupied seats: " . $rowOcc["Occ"] . "</p>";
-echo "<br><p>Total number of seats: $total</p>";
+echo "<p>Number of available seats: " . $rowFree["Free"] . "</p>";
+echo "<p>Number of reserved seats: " . $rowRes["Reserved"] . "</p>";
+echo "<p>Number of occupied seats: " . $rowOcc["Occ"] . "</p>";
+echo "<p>Total number of seats: $total</p>";
 
 echo "<form action='index.php' method='post'>";
-echo "<br><p style='color: green'>Now you are logged in and you can purchase airplane seats.</p><br>";
+echo "<p style='color: green'>Now you are logged in and you can purchase airplane seats.</p>";
 echo "<input type=\"hidden\" value=\"1\" name=\"lout\">";
-echo "<button type=\"submit\" name=\"logout\">Log Out</button><br>";
-echo "</form>";
+echo "<button type=\"submit\" name=\"logout\">Log Out</button>";
+echo "</form><br>";
 
-echo "<br><form action='personalPage.php' method='post'>";
-echo "<button type=\"submit\" name=\"update\">Update Seats</button><br>";
+echo "<form method='post'>";
+echo "<button type=\"submit\" name=\"update\" formaction='personalPage.php'>Update Seats</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp";
+echo "<button type=\"submit\" name=\"buy\">Buy!</button>";
 echo "</form>";
 
 ?>

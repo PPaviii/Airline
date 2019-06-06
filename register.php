@@ -3,12 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign Up</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/form.css">
     <script type="text/javascript" src="register.js"></script>
 </head>
 <body>
 
 <h2>Sign Up</h2>
+
+<?php
+
+include "phpFunctions.php";
+
+session_start();
+
+isLoginSessionExpired();
+
+if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
+    echo "<p>You are already registered</p><br>";
+    echo "<a href='personalPage.php'>Return to the Personal Home page</a>";
+    return;
+}
+
+?>
 
 <form id="register" action='registerOk.php' method='post' onsubmit="return check();">
     <p>

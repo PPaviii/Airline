@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign In</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/form.css">
 </head>
 <body>
 
@@ -11,11 +11,15 @@
 
 <?php
 
+include "phpFunctions.php";
+
 session_start();
 
+isLoginSessionExpired();
+
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
-    echo "<h2>You are already logged in</h2>";
-    echo "<a href='index.php'>Return to the Home page</a>";
+    echo "<p>You are already logged in</p><br>";
+    echo "<a href='personalPage.php'>Return to the Personal Home page</a>";
     return;
 }
 

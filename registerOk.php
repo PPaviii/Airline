@@ -21,7 +21,8 @@ if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
 
         session_start();
         $_SESSION["logged"] = 1; //the user is now logged in
-        session_write_close(); //"lock is released"
+        $_SESSION["username"] = $_POST["user"];
+        $_SESSION["logged_time"] = time();
 
         $conn->close();
         echo "<script type='text/javascript'>";

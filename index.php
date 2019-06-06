@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Airline Home Page</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
 </head>
 <body>
 
@@ -12,10 +12,14 @@
 <?php
 
 session_start();
+
 $_SESSION["error"] = 0; //flush previous error in the login form
 
 if(!isset($_SESSION["logged"])){
     $_SESSION["logged"] = 0;
+}elseif ($_SESSION["logged"] == 1){
+    header("HTTP/1.1 303 See Other");
+    header("Location: personalPage.php");
 }
 
 if(isset($_POST["lout"]) && $_POST["lout"] == 1){
@@ -46,19 +50,12 @@ if ($conn->connect_error) {
 }
 
 echo "<table>";
-echo "<tr>";
-echo "<th></th>";
-
-for ($x = ord('A'); $x < ord('A') + $columns; $x++) {
-    echo "<th>" . chr($x) ."</th>";
-}
 
 echo "</tr>";
 for($i = 1; $i <= $rows; $i++){
     echo"<tr>";
-    echo "<th>$i</th>";
-    for($j = 1; $j <= $columns; $j++){
-        echo "<td><a href='login.php' onclick='allert()'>Posto</a></td>";
+    for($x = ord('A'); $x < ord('A') + $columns; $x++){
+        echo "<td><a href='login.php' onclick='allert()'>" . $i . chr($x) . "</a></td>";
     }
     echo "</tr>";
 }
@@ -77,12 +74,12 @@ $rowFree = $resFree->fetch_assoc();
 $rowRes = $resRes->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
-echo "<br><p>Number of available seats: " . $rowFree["Free"] . "</p>";
-echo "<br><p>Number of reserved seats: " . $rowRes["Reserved"] . "</p>";
-echo "<br><p>Number of occupied seats: " . $rowOcc["Occ"] . "</p>";
-echo "<br><p>Total number of seats: $total</p>";
+echo "<p>Number of available seats: " . $rowFree["Free"] . "</p>";
+echo "<p>Number of reserved seats: " . $rowRes["Reserved"] . "</p>";
+echo "<p>Number of occupied seats: " . $rowOcc["Occ"] . "</p>";
+echo "<p>Total number of seats: $total</p>";
 
-echo "<br><a href='login.php'>Sign In</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+echo "<a href='login.php'>Sign In</a>&nbsp;&nbsp;&nbsp;&nbsp;";
 echo "<a href='register.php'>Sign Up</a>";
 
 ?>
