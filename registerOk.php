@@ -26,7 +26,7 @@ if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
         $conn->close();
         echo "<script type='text/javascript'>";
         echo "window.alert('Registration completed successfully');";
-        echo "window.location.replace('index.php');";
+        echo "window.location.replace('PersonalPage.php');";
         echo "</script>";
     }else if(mysqli_errno($conn) === 1062){
         $conn->close();

@@ -35,6 +35,8 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     <button type="submit" name="submit">Sign In</button><br><br>
 </form>
 
+    New to Airline Company? <a href="register.php">Sign Up!</a>
+
 <?php
 
 if (isset($_SESSION["error"]) && $_SESSION["error"] == 1) {
