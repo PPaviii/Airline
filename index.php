@@ -10,6 +10,9 @@
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
 </head>
 <body>
+<script>
+    //if (navigator.cookieEnabled) return true;
+</script>
 
 <div>
 

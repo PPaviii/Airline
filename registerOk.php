@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <noscript>
-        This page needs JavaScript activated to work.
         <style>div { display:none; }</style>
     </noscript>
     <meta charset="UTF-8">
