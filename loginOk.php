@@ -22,6 +22,10 @@ include "phpFunctions.php";
 
 session_start();
 
+if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
+    isLoginSessionExpired();
+}
+
 $_SESSION["active_time"] = time();
 
 if($_SESSION["logged"] == 0) {

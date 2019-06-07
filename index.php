@@ -35,8 +35,6 @@ $_SESSION["active_time"] = time();
 
 $_SESSION["error"] = 0; //flush previous error in the login form
 
-//race condition con redirect
-
 if(!isset($_SESSION["logged"])){
     $_SESSION["logged"] = 0;
 }elseif($_SESSION["logged"] == 1 && !isset($_POST["lout"])){
