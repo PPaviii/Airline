@@ -2,31 +2,18 @@
 <html lang="en">
 <head>
     <noscript>
-        This page needs JavaScript activated to work.
+        This page needs JavaScript activated to work correctly.
         <style>div { display:none; }</style>
     </noscript>
     <meta charset="UTF-8">
     <title>Airline Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
-
-<script>
-    function checkCookie(){
-        var cookieEnabled = navigator.cookieEnabled;
-        if (!cookieEnabled){
-            document.cookie = "testcookie";
-            cookieEnabled = document.cookie.indexOf("testcookie") !== -1;
+    <script>
+        if(!navigator.cookieEnabled){
+            document.write("<p>This page needs Cookies activated to work correctly.</p>");
+            document.write("<style>div { display:none; }</style>");
         }
-        return cookieEnabled || showCookieFail();
-    }
-
-    function showCookieFail(){
-        document.write("<p>This page needs Cookies activated to work.</p>");
-        document.write("<style>div { display:none; }</style>");
-    }
-
-    checkCookie();
-</script>
-
+    </script>
 </head>
 <body>
 

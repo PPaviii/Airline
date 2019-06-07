@@ -7,6 +7,11 @@
     <meta charset="UTF-8">
     <title>Airline Personal Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
+    <script>
+        if(!navigator.cookieEnabled){
+            document.write("<style>div { display:none; }</style>");
+        }
+    </script>
 </head>
 <body>
 

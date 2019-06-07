@@ -8,6 +8,11 @@
     <title>Sign Up</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/form.css">
     <script type="text/javascript" src="register.js"></script>
+    <script>
+        if(!navigator.cookieEnabled){
+            document.write("<style>div { display:none; }</style>");
+        }
+    </script>
 </head>
 <body>
 

@@ -6,6 +6,11 @@
     </noscript>
     <meta charset="UTF-8">
     <title>LoginCheck</title>
+    <script>
+        if(!navigator.cookieEnabled){
+            document.write("<style>div { display:none; }</style>");
+        }
+    </script>
 </head>
 <body>
 

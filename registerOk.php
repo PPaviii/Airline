@@ -6,6 +6,11 @@
     </noscript>
     <meta charset="UTF-8">
     <title>RegisterCheck</title>
+    <script>
+        if(!navigator.cookieEnabled){
+            document.write("<style>div { display:none; }</style>");
+        }
+    </script>
 </head>
 <body>
 
