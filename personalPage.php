@@ -17,6 +17,8 @@ session_start();
 
 isLoginSessionExpired();
 
+$_SESSION["active_time"] = time();
+
 if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0){
     $_SESSION["logged"] = 0;
     header("HTTP/1.1 303 See Other");

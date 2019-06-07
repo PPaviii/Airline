@@ -4,7 +4,7 @@ include "phpFunctions.php";
 
 session_start();
 
-isLoginSessionExpired();
+$_SESSION["active_time"] = time();
 
 if($_SESSION["logged"] == 0) {
 
@@ -35,7 +35,7 @@ if($_SESSION["logged"] == 0) {
                 $_SESSION["error"] = 0;
 
                 $_SESSION["username"] = $_POST["user"];
-                $_SESSION["logged_time"] = time();
+                $_SESSION["active_time"] = time();
 
                 header("HTTP/1.1 303 See Other");
                 header("Location: personalPage.php");

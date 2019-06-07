@@ -17,6 +17,8 @@ session_start();
 
 isLoginSessionExpired();
 
+$_SESSION["active_time"] = time();
+
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     echo "<p>You are already logged in</p><br>";
     echo "<a href='personalPage.php'>Return to the Personal Home page</a>";

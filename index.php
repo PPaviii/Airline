@@ -11,7 +11,13 @@
 
 <?php
 
+include "phpFunctions.php";
+
 session_start();
+
+isLoginSessionExpired();
+
+$_SESSION["active_time"] = time();
 
 $_SESSION["error"] = 0; //flush previous error in the login form
 
