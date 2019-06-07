@@ -8,13 +8,29 @@
     <meta charset="UTF-8">
     <title>Airline Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
-</head>
-<body>
+
 <script>
-    //if (navigator.cookieEnabled) return true;
+    function checkCookie(){
+        var cookieEnabled = navigator.cookieEnabled;
+        if (!cookieEnabled){
+            document.cookie = "testcookie";
+            cookieEnabled = document.cookie.indexOf("testcookie") !== -1;
+        }
+        return cookieEnabled || showCookieFail();
+    }
+
+    function showCookieFail(){
+        document.write("<p>This page needs Cookies activated to work.</p>");
+        document.write("<style>div { display:none; }</style>");
+    }
+
+    checkCookie();
 </script>
 
-<div>
+</head>
+<body>
+
+<div id="div">
 
 <h2>Airline Homepage</h2>
 
