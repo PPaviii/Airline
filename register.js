@@ -35,30 +35,6 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-
-    if(password.length < 2){
-        return false;
-    }
-
-    for(let i = 0; i < password.length; i++){
-        if((password[i] >= 'a' && password[i] <= 'z') && isNaN(parseInt(password[i], 10))){
-            break;
-        }
-
-        if(i === password.length - 1){
-            return false;
-        }
-    }
-
-    for(let j = 0; j < password.length; j++){
-        if((password[j] >= 'A' && password[j] <= 'Z') || !isNaN(parseInt(password[j], 10))){
-            break;
-        }
-
-        if(j === password.length - 1){
-            return false;
-        }
-    }
-
-    return true;
+    var re = /^(([a-z]*)+([A-Z]|\d)+[a-z]+)|(([a-z]+)+([A-Z]|\d)+([a-z]*))$/;
+    return Boolean(re.test(String(password)));
 }

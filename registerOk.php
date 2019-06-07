@@ -15,6 +15,20 @@
 
 if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
 
+    if (!preg_match('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $_POST["user"])){
+        echo "<script type='text/javascript'>";
+        echo "window.alert('Error: please insert a valid e-mail.');";
+        echo "window.location.replace('register.php');";
+        echo "</script>";
+    }
+
+    if(!preg_match('/^(([a-z]*)+([A-Z]|\d)+[a-z]+)|(([a-z]+)+([A-Z]|\d)+([a-z]*))$/', $_POST["pass1"])){
+        echo "<script type='text/javascript'>";
+        echo "window.alert('Error: please insert a valid password.');";
+        echo "window.location.replace('register.php');";
+        echo "</script>";
+    }
+
     $servername = "localhost";
     $username = "s264970";
     $password = "chalingt";

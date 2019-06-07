@@ -20,7 +20,9 @@ include "phpFunctions.php";
 
 session_start();
 
-isLoginSessionExpired();
+if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
+    isLoginSessionExpired();
+}
 
 $_SESSION["active_time"] = time();
 
@@ -51,7 +53,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 <?php
 
 if (isset($_SESSION["error"]) && $_SESSION["error"] == 1) {
-    echo "<p style='color: red'>Error: wrong username or password. Retry.</p><br>";
+    echo "<br><br><p style='color: red'>Error: wrong username or password. Retry.</p><br>";
 }
 
 ?>
