@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <noscript>
+        This page needs JavaScript activated to work.
+        <style>div { display:none; }</style>
+    </noscript>
+    <meta charset="UTF-8">
+    <title>RegisterCheck</title>
+</head>
+<body>
+
+<div>
+
 <?php
 
 if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
@@ -48,3 +62,7 @@ if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
 }
 
 ?>
+
+</div>
+</body>
+</html>

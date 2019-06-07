@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <noscript>
+        This page needs JavaScript activated to work.
+        <style>div { display:none; }</style>
+    </noscript>
     <meta charset="UTF-8">
     <title>Airline Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
 </head>
 <body>
+
+<div>
 
 <h2>Airline Homepage</h2>
 
@@ -101,5 +107,6 @@ function allert(){
 
 </script>
 
+</div>
 </body>
 </html>

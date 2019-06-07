@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <noscript>
+        This page needs JavaScript activated to work.
+        <style>div { display:none; }</style>
+    </noscript>
     <meta charset="UTF-8">
     <title>Sign In</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/form.css">
 </head>
 <body>
+
+<div>
 
 <h2>Sign In</h2>
 
@@ -51,5 +57,6 @@ if (isset($_SESSION["error"]) && $_SESSION["error"] == 1) {
 
 ?>
 
+</div>
 </body>
 </html>

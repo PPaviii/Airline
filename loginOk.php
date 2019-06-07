@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <noscript>
+        This page needs JavaScript activated to work.
+        <style>div { display:none; }</style>
+    </noscript>
+    <meta charset="UTF-8">
+    <title>LoginCheck</title>
+</head>
+<body>
+
+<div>
+
 <?php
 
 include "phpFunctions.php";
@@ -57,3 +71,8 @@ if($_SESSION["logged"] == 0) {
 }
 
 ?>
+
+</div>
+
+</body>
+</html>

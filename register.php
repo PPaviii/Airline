@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <noscript>
+        This page needs JavaScript activated to work.
+        <style>div { display:none; }</style>
+    </noscript>
     <meta charset="UTF-8">
     <title>Sign Up</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/form.css">
     <script type="text/javascript" src="register.js"></script>
 </head>
 <body>
+
+<div>
 
 <h2>Sign Up</h2>
 
@@ -46,6 +52,8 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 
     <button type="submit" name="submit">Sign Up</button><br><br>
 </form>
+
+</div>
 
 </body>
 </html>
