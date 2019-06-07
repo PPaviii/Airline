@@ -21,9 +21,11 @@ $_SESSION["active_time"] = time();
 
 $_SESSION["error"] = 0; //flush previous error in the login form
 
+//race condition con redirect
+
 if(!isset($_SESSION["logged"])){
     $_SESSION["logged"] = 0;
-}elseif ($_SESSION["logged"] == 1){
+}elseif($_SESSION["logged"] == 1 && !isset($_POST["lout"])){
     header("HTTP/1.1 303 See Other");
     header("Location: personalPage.php");
 }
@@ -31,6 +33,7 @@ if(!isset($_SESSION["logged"])){
 if(isset($_POST["lout"]) && $_POST["lout"] == 1){
     $_SESSION["logged"] = 0;
     $_SESSION["error"] = 0;
+    session_destroy();
     header("HTTP/1.1 303 See Other");
     header("Location: index.php");
 }
