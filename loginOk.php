@@ -19,6 +19,7 @@
 <?php
 
 include "phpFunctions.php";
+enforceSSL();
 
 session_start();
 
@@ -61,15 +62,18 @@ if($_SESSION["logged"] == 0) {
 
                 header("HTTP/1.1 303 See Other");
                 header("Location: personalPage.php");
+                exit();
             } else {
                 $_SESSION["error"] = 1;
                 header("HTTP/1.1 303 See Other");
                 header("Location: login.php");
+                exit();
             }
         }else{
             $_SESSION["error"] = 1;
             header("HTTP/1.1 303 See Other");
             header("Location: login.php");
+            exit();
         }
     }
 

@@ -17,11 +17,12 @@
 
 <div>
 
-<h2>Airline Personal Homepage</h2>
+<h2>AirFra Personal Homepage</h2>
 
 <?php
 
 include "phpFunctions.php";
+enforceSSL();
 
 session_start();
 
@@ -35,6 +36,7 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0){
     $_SESSION["logged"] = 0;
     header("HTTP/1.1 303 See Other");
     header("Location: login.php");
+    exit();
 }
 
 $_SESSION["error"] = 0; //flush previous error in the login form

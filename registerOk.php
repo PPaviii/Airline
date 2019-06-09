@@ -18,6 +18,9 @@
 
 <?php
 
+include "phpFunctions.php";
+enforceSSL();
+
 if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
 
     if (!preg_match('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $_POST["user"])){

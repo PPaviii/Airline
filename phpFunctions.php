@@ -13,4 +13,12 @@ function isLoginSessionExpired() {
     }
 }
 
+function enforceSSL(){
+    if(empty($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] !== "on"){
+        header("HTTP/1.1 303 See Other");
+        header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+        exit();
+    }
+}
+
 ?>

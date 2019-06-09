@@ -22,6 +22,7 @@
 <?php
 
 include "phpFunctions.php";
+enforceSSL();
 
 session_start();
 
@@ -53,7 +54,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     <button type="submit" name="submit">Sign In</button><br><br>
 </form>
 
-    New to Airline Company? <a href="register.php">Sign Up!</a>
+    New to AirFra Company? <a href="register.php">Sign Up!</a>
 
 <?php
 

@@ -23,6 +23,7 @@
 <?php
 
 include "phpFunctions.php";
+enforceSSL();
 
 session_start();
 
