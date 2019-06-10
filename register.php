@@ -39,6 +39,8 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     return;
 }
 
+session_write_close();
+
 ?>
 
 <form id="register" action='registerOk.php' method='post' onsubmit="return check();">

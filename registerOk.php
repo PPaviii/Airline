@@ -65,6 +65,7 @@ if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
         $_SESSION["username"] = $user;
         $_SESSION["active_time"] = time();
 
+        session_write_close();
         $insert->close();
         $conn->close();
 
@@ -73,6 +74,7 @@ if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
         echo "window.location.replace('personalPage.php');";
         echo "</script>";
     }else if($insert->errno === 1062){
+        session_write_close();
         $insert->close();
         $conn->close();
 
@@ -81,14 +83,16 @@ if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
         echo "window.location.replace('register.php');";
         echo "</script>";
     }else{
+        session_write_close();
         $insert->close();
         $conn->close();
 
-        echo "Error: <br>" . $conn->error;
+        echo "Unexpected error.<br>";
         echo "<br><a href='register.php'>Return to the register page</a>";
     }
 
 }else{
+    session_write_close();
     echo "<h2>A problem has occurred</h2>";
     echo "<p>No change to the database were done.</p>";
     echo "<a href='register.php'>Return to the register page</a>";

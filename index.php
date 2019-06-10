@@ -39,6 +39,7 @@ if(!isset($_SESSION["logged"])){
 }elseif($_SESSION["logged"] == 1 && !isset($_POST["lout"])){
     header("HTTP/1.1 303 See Other");
     header("Location: personalPage.php");
+    session_write_close();
     exit();
 }
 
@@ -50,6 +51,8 @@ if(isset($_POST["lout"]) && $_POST["lout"] == 1){
     header("Location: index.php");
     exit();
 }
+
+session_write_close();
 
 /*
     status legend:

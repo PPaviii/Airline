@@ -68,6 +68,7 @@ if($_SESSION["logged"] == 0) {
                 $_SESSION["username"] = $user;
                 $_SESSION["active_time"] = time();
 
+                session_write_close();
                 $login->close();
                 $conn->close();
 
@@ -77,6 +78,7 @@ if($_SESSION["logged"] == 0) {
             } else {
                 $_SESSION["error"] = 1;
 
+                session_write_close();
                 $login->close();
                 $conn->close();
 
@@ -87,6 +89,7 @@ if($_SESSION["logged"] == 0) {
         }else{
             $_SESSION["error"] = 1;
 
+            session_write_close();
             $login->close();
             $conn->close();
 

@@ -34,6 +34,7 @@ $_SESSION["active_time"] = time();
 
 if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0){
     $_SESSION["logged"] = 0;
+    session_write_close();
     header("HTTP/1.1 303 See Other");
     header("Location: login.php");
     exit();
@@ -100,6 +101,8 @@ echo "<p style='color: green'>Now you are logged in and you can purchase airplan
 echo "<input type=\"hidden\" value=\"1\" name=\"lout\">";
 echo "<button type=\"submit\" name=\"logout\">Log Out</button>";
 echo "</form><br>";
+
+session_write_close();
 
 echo "<form method='post'>";
 echo "<button type=\"submit\" name=\"update\" formaction='personalPage.php'>Update Seats</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp";
