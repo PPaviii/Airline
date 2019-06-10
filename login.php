@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <noscript>
-        <style>div { display:none; }</style>
+        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/errorJs.php">
     </noscript>
     <meta charset="UTF-8">
     <title>Sign In</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/form.css">
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<style>div { display:none; }</style>");
+            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/errorCookies.php'>");
         }
     </script>
 </head>
@@ -54,8 +54,9 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     <button type="submit" name="submit">Sign In</button><br><br>
 </form>
 
-    New to AirFra Company? <a href="register.php">Sign Up!</a>
+    New to AirFra Company? <a href="register.php">Sign Up!</a><br><br>
 
+    <a href="index.php">Return to the seat map</a>
 <?php
 
 if (isset($_SESSION["error"]) && $_SESSION["error"] == 1) {

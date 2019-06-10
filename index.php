@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
     <noscript>
-        This page needs JavaScript activated to work correctly.
-        <style>div { display:none; }</style>
+        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/errorJsIndex.php">
     </noscript>
     <meta charset="UTF-8">
     <title>Airline Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<p>This page needs Cookies activated to work correctly.</p>");
-            document.write("<style>div { display:none; }</style>");
+            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/errorCookiesIndex.php'>");
         }
     </script>
 </head>
@@ -78,7 +76,8 @@ echo "</tr>";
 for($i = 1; $i <= $rows; $i++){
     echo"<tr>";
     for($x = ord('A'); $x < ord('A') + $columns; $x++){
-        echo "<td><a href='login.php' onclick='allert()'>" . $i . chr($x) . "</a></td>";
+        echo "<td style='background-color: limegreen' onclick='allert()'><img src='seat.png' style='width:50px;height:50px;'>";
+        echo $i . chr($x) . "</td>";
     }
     echo "</tr>";
 }
@@ -112,6 +111,7 @@ echo "<a href='register.php'>Sign Up</a>";
 
 function allert(){
     window.alert('You must be logged in to purchase a seat. Log in and try again.');
+    window.location.replace('login.php');
 }
 
 </script>

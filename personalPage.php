@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <noscript>
-        <style>div { display:none; }</style>
+        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/errorJsIndex.php">
     </noscript>
     <meta charset="UTF-8">
     <title>Airline Personal Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<style>div { display:none; }</style>");
+            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/errorCookiesIndex.php'>");
         }
     </script>
 </head>
@@ -67,7 +67,8 @@ echo "</tr>";
 for($i = 1; $i <= $rows; $i++){
     echo"<tr>";
     for($x = ord('A'); $x < ord('A') + $columns; $x++){
-        echo "<td>" . $i . chr($x) . "</td>";
+        echo "<td style='background-color: limegreen'><img src='seat.png' style='width:50px;height:50px;'>";
+        echo $i . chr($x) . "</td>";
     }
     echo "</tr>";
 }

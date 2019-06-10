@@ -1,5 +1,4 @@
-table {width: 20%; line-height: 300%;}
+table {width: 20%;}
 table, th, td {border: 1px solid black;}
 th, td {text-align: center;}
-th, td {padding: 2px;}
-th {background-color: lightgrey}
+th, td {padding: auto; margin: auto}
