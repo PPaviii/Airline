@@ -75,22 +75,23 @@ for($i = 1; $i <= $rows; $i++){
 }
 echo "</table>";
 
-$free = "SELECT COUNT(*) AS Free FROM Seat WHERE Status = 0";
-$reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 1";
-$occupied = "SELECT COUNT(*) AS Occ FROM Seat WHERE Status = 2";
+$reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 0";
+$occupied = "SELECT COUNT(*) AS Occ FROM Seat WHERE Status = 1";
 $total = $rows * $columns;
 
-$resFree = $conn->query($free);
 $resRes = $conn->query($reserved);
 $resOcc = $conn->query($occupied);
 
-$rowFree = $resFree->fetch_assoc();
 $rowRes = $resRes->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
-echo "<p>Number of available seats: " . $rowFree["Free"] . "</p>";
-echo "<p>Number of reserved seats: " . $rowRes["Reserved"] . "</p>";
-echo "<p>Number of occupied seats: " . $rowOcc["Occ"] . "</p>";
+$reserved = (int) $rowRes["Reserved"];
+$occupied = (int) $rowOcc["Occ"];
+$free = $total - $reserved - $occupied;
+
+echo "<p>Number of available seats: " . $free . "</p>";
+echo "<p>Number of reserved seats: " . $reserved . "</p>";
+echo "<p>Number of occupied seats: " . $occupied . "</p>";
 echo "<p>Total number of seats: $total</p>";
 
 echo "<form action='index.php' method='post'>";
