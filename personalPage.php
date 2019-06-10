@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/errorJsIndex.php">
+        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/Errors/errorJsIndex.php">
     </noscript>
     <meta charset="UTF-8">
     <title>Airline Personal Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/errorCookiesIndex.php'>");
+            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/Errors/errorCookiesIndex.php'>");
         }
     </script>
 </head>
@@ -67,7 +67,8 @@ echo "</tr>";
 for($i = 1; $i <= $rows; $i++){
     echo"<tr>";
     for($x = ord('A'); $x < ord('A') + $columns; $x++){
-        echo "<td style='background-color: limegreen'><img src='seat.png' style='width:50px;height:50px;'>";
+        $char = chr($x);
+        echo "<td id='$i$char' onclick='colorChange(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
         echo $i . chr($x) . "</td>";
     }
     echo "</tr>";
@@ -103,7 +104,32 @@ echo "<button type=\"submit\" name=\"update\" formaction='personalPage.php'>Upda
 echo "<button type=\"submit\" name=\"buy\">Buy!</button>";
 echo "</form>";
 
+$idReserved = "SELECT Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
+$idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
+
+$resIdR = $conn->query($idReserved);
+$resIdO = $conn->query($idOccupied);
+
+while ($row = $resIdR->fetch_assoc()){
+    echo "<script type='text/javascript'>";
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
+    echo "</script>";
+}
+
+while ($row = $resIdO->fetch_assoc()){
+    echo "<script type='text/javascript'>";
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
+    echo "</script>";
+}
+
 ?>
+
+<script>
+    function colorChange(id){
+        document.getElementById(id).style.background = "yellow";
+    }
+</script>
 
 </div>
 </body>

@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/errorJs.php">
+        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/Errors/errorJs.php">
     </noscript>
     <meta charset="UTF-8">
     <title>LoginCheck</title>
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/errorCookies.php'>");
+            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/Errors/errorCookies.php'>");
         }
     </script>
 </head>

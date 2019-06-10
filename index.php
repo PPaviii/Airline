@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/errorJsIndex.php">
+        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/Errors/errorJsIndex.php">
     </noscript>
     <meta charset="UTF-8">
     <title>Airline Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/errorCookiesIndex.php'>");
+            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/Errors/errorCookiesIndex.php'>");
         }
     </script>
 </head>
@@ -76,7 +76,8 @@ echo "</tr>";
 for($i = 1; $i <= $rows; $i++){
     echo"<tr>";
     for($x = ord('A'); $x < ord('A') + $columns; $x++){
-        echo "<td style='background-color: limegreen' onclick='allert()'><img src='seat.png' style='width:50px;height:50px;'>";
+        $char = chr($x);
+        echo "<td id='$i$char' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
         echo $i . chr($x) . "</td>";
     }
     echo "</tr>";
@@ -105,13 +106,32 @@ echo "<p>Total number of seats: $total</p>";
 echo "<a href='login.php'>Sign In</a>&nbsp;&nbsp;&nbsp;&nbsp;";
 echo "<a href='register.php'>Sign Up</a>";
 
+$idReserved = "SELECT Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
+$idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
+
+$resIdR = $conn->query($idReserved);
+$resIdO = $conn->query($idOccupied);
+
+while ($row = $resIdR->fetch_assoc()){
+    echo "<script type='text/javascript'>";
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
+    echo "</script>";
+}
+
+while ($row = $resIdO->fetch_assoc()){
+    echo "<script type='text/javascript'>";
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
+    echo "</script>";
+}
+
 ?>
 
 <script>
 
 function allert(){
     window.alert('You must be logged in to purchase a seat. Log in and try again.');
-    window.location.replace('login.php');
+    window.location.href = 'login.php';
 }
 
 </script>
