@@ -46,31 +46,50 @@ if($_SESSION["logged"] == 0) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $login = "SELECT Password FROM User WHERE Username = '" . $_POST["user"] . "'";
+        $user = strip_tags($_POST["user"]);
+        $user = htmlentities($user);
+        $pass = strip_tags($_POST["pass"]);
+        $pass = htmlentities($pass);
 
-        $res = $conn->query($login);
+        $login = $conn->prepare("SELECT Password FROM User WHERE Username = ?");
+        $login->bind_param("s", $user);
+        $login->execute();
+        $login->store_result();
+        $rows = $login->num_rows;
+        $login->bind_result($password);
+        $login->fetch();
 
-        if (mysqli_num_rows($res) === 1){
+        if ($rows === 1){
 
-            $nRow = $res->fetch_assoc();
-            if (password_verify($_POST["pass"], $nRow["Password"])) {
+            if (password_verify($pass, $password)) {
                 $_SESSION["logged"] = 1;
                 $_SESSION["error"] = 0;
 
-                $_SESSION["username"] = $_POST["user"];
+                $_SESSION["username"] = $user;
                 $_SESSION["active_time"] = time();
+
+                $login->close();
+                $conn->close();
 
                 header("HTTP/1.1 303 See Other");
                 header("Location: personalPage.php");
                 exit();
             } else {
                 $_SESSION["error"] = 1;
+
+                $login->close();
+                $conn->close();
+
                 header("HTTP/1.1 303 See Other");
                 header("Location: login.php");
                 exit();
             }
         }else{
             $_SESSION["error"] = 1;
+
+            $login->close();
+            $conn->close();
+
             header("HTTP/1.1 303 See Other");
             header("Location: login.php");
             exit();

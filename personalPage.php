@@ -95,6 +95,7 @@ echo "<p>Number of occupied seats: " . $occupied . "</p>";
 echo "<p>Total number of seats: $total</p>";
 
 echo "<form action='index.php' method='post'>";
+echo "<p style='color:green'>Hi, " . $_SESSION["username"] . ".</p>";
 echo "<p style='color: green'>Now you are logged in and you can purchase airplane seats.</p>";
 echo "<input type=\"hidden\" value=\"1\" name=\"lout\">";
 echo "<button type=\"submit\" name=\"logout\">Log Out</button>";
