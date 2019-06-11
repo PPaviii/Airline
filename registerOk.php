@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/Errors/errorJs.php">
+        <style>div { display:none; }</style>
     </noscript>
     <meta charset="UTF-8">
     <title>RegisterCheck</title>
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/Errors/errorCookies.php'>");
+            document.write("<style>div { display:none; }</style>");
         }
     </script>
 </head>
@@ -18,7 +18,7 @@
 
 <?php
 
-include "phpFunctions.php";
+require_once "phpFunctions.php";
 enforceSSL();
 
 session_start();
@@ -29,6 +29,13 @@ if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
     $user = htmlentities($user);
     $pass = strip_tags($_POST["pass1"]);
     $pass = htmlentities($pass);
+
+    if($user !== $_POST["user"] || $pass !== $_POST["pass1"]){
+        echo "<h2>A problem has occurred with your input values. You registration is not valid.</h2>";
+        echo "<p>No change to the database were done.</p>";
+        echo "<a href='register.php'>Return to the register page</a>";
+        return;
+    }
 
     if (!preg_match('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $user)){
         echo "<script type='text/javascript'>";

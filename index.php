@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/Errors/errorJsIndex.php">
+        This page needs JavaScript activated to work.
+        <style>div { display:none; }</style>
     </noscript>
     <meta charset="UTF-8">
     <title>Airline Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/Errors/errorCookiesIndex.php'>");
+            document.write("<p>This page needs Cookies activated to work correctly.</p>");
+            document.write("<style>div { display:none; }</style>");
         }
     </script>
 </head>
@@ -21,7 +23,9 @@
 
 <?php
 
-include "phpFunctions.php";
+require_once "phpFunctions.php";
+require_once "Global.php";
+
 enforceSSL();
 
 session_start();
@@ -46,6 +50,7 @@ if(!isset($_SESSION["logged"])){
 if(isset($_POST["lout"]) && $_POST["lout"] == 1){
     $_SESSION["logged"] = 0;
     $_SESSION["error"] = 0;
+    $_SESSION = array(); //delete all session variables
     session_destroy();
     header("HTTP/1.1 303 See Other");
     header("Location: index.php");
@@ -60,9 +65,6 @@ session_write_close();
         - 1: occupied
 */
 
-$rows = 10; //places
-$columns = 6; //seats
-
 $servername = "localhost";
 $username = "s264970";
 $password = "chalingt";
@@ -76,9 +78,9 @@ if ($conn->connect_error) {
 echo "<table>";
 
 echo "</tr>";
-for($i = 1; $i <= $rows; $i++){
+for($i = 1; $i <= ROWS; $i++){
     echo"<tr>";
-    for($x = ord('A'); $x < ord('A') + $columns; $x++){
+    for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
         $char = chr($x);
         echo "<td id='$i$char' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
         echo $i . chr($x) . "</td>";
@@ -89,7 +91,7 @@ echo "</table>";
 
 $reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 0";
 $occupied = "SELECT COUNT(*) AS Occ FROM Seat WHERE Status = 1";
-$total = $rows * $columns;
+$total = ROWS * COLUMNS;
 
 $resRes = $conn->query($reserved);
 $resOcc = $conn->query($occupied);

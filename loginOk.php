@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/Errors/errorJs.php">
+        <style>div { display:none; }</style>
     </noscript>
     <meta charset="UTF-8">
     <title>LoginCheck</title>
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/Errors/errorCookies.php'>");
+            document.write("<style>div { display:none; }</style>");
         }
     </script>
 </head>
@@ -18,7 +18,7 @@
 
 <?php
 
-include "phpFunctions.php";
+require_once "phpFunctions.php";
 enforceSSL();
 
 session_start();
@@ -50,6 +50,12 @@ if($_SESSION["logged"] == 0) {
         $user = htmlentities($user);
         $pass = strip_tags($_POST["pass"]);
         $pass = htmlentities($pass);
+
+        if($user !== $_POST["user"] || $pass !== $_POST["pass"]){
+            echo "<h2>A problem has occurred with your input values. You are not logged in.</h2>";
+            echo "<a href='index.php'>Return to the home page</a>";
+            return;
+        }
 
         $login = $conn->prepare("SELECT Password FROM User WHERE Username = ?");
         $login->bind_param("s", $user);

@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/Errors/errorJs.php">
+        <style>div { display:none; }</style>
     </noscript>
     <meta charset="UTF-8">
     <title>Sign In</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/form.css">
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/Errors/errorCookies.php'>");
+            document.write("<style>div { display:none; }</style>");
         }
     </script>
 </head>
@@ -21,7 +21,7 @@
 
 <?php
 
-include "phpFunctions.php";
+require_once "phpFunctions.php";
 enforceSSL();
 
 session_start();

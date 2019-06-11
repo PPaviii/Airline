@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/MyProject/Airline/Errors/errorJs.php">
+        <style>div { display:none; }</style>
     </noscript>
     <meta charset="UTF-8">
     <title>Sign Up</title>
@@ -10,7 +10,7 @@
     <script type="text/javascript" src="register.js"></script>
     <script>
         if(!navigator.cookieEnabled){
-            document.write("<meta http-equiv='refresh' content='0; URL=/MyProject/Airline/Errors/errorCookies.php'>");
+            document.write("<style>div { display:none; }</style>");
         }
     </script>
 </head>
@@ -22,7 +22,7 @@
 
 <?php
 
-include "phpFunctions.php";
+require_once "phpFunctions.php";
 enforceSSL();
 
 session_start();
