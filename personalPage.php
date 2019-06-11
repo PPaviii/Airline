@@ -67,7 +67,7 @@ for($i = 1; $i <= ROWS; $i++){
     echo"<tr>";
     for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
         $char = chr($x);
-        echo "<td id='$i$char' onclick='colorChange(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+        echo "<td id='$i$char' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
         echo $i . chr($x) . "</td>";
     }
     echo "</tr>";
@@ -129,8 +129,29 @@ while ($row = $resIdO->fetch_assoc()){
 ?>
 
 <script>
-    function colorChange(id){
-        document.getElementById(id).style.background = "yellow";
+    function reserveSeat(id){
+        if (window.XMLHttpRequest) {
+            // code for modern browsers
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for old IE browsers
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if(this.responseText === 'OK') {
+                    document.getElementById(id).style.background = "yellow";
+                }else{
+                    window.alert('You must be logged in to purchase a seat. Log in and try again.');
+                    window.location.href = 'login.php';
+                }
+            }
+        };
+
+        xmlhttp.open("POST", "reserve.php", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("seatId=" + id);
     }
 </script>
 
