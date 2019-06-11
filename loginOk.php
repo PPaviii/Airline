@@ -21,7 +21,7 @@
 require_once "phpFunctions.php";
 enforceSSL();
 
-session_start();
+start_secure_session();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     isLoginSessionExpired();
@@ -74,6 +74,7 @@ if($_SESSION["logged"] == 0) {
                 $_SESSION["username"] = $user;
                 $_SESSION["active_time"] = time();
 
+                session_regenerate_id();
                 session_write_close();
                 $login->close();
                 $conn->close();

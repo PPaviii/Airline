@@ -28,7 +28,7 @@ require_once "Global.php";
 
 enforceSSL();
 
-session_start();
+start_secure_session();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     isLoginSessionExpired();
@@ -50,8 +50,8 @@ if(!isset($_SESSION["logged"])){
 if(isset($_POST["lout"]) && $_POST["lout"] == 1){
     $_SESSION["logged"] = 0;
     $_SESSION["error"] = 0;
-    $_SESSION = array(); //delete all session variables
-    session_destroy();
+    destroy_secure_session();
+    session_regenerate_id();
     header("HTTP/1.1 303 See Other");
     header("Location: index.php");
     exit();

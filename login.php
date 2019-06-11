@@ -24,7 +24,7 @@
 require_once "phpFunctions.php";
 enforceSSL();
 
-session_start();
+start_secure_session();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     isLoginSessionExpired();

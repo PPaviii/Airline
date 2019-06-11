@@ -21,7 +21,7 @@
 require_once "phpFunctions.php";
 enforceSSL();
 
-session_start();
+start_secure_session();
 
 if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
 
@@ -72,6 +72,7 @@ if (isset($_POST["user"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])) {
         $_SESSION["username"] = $user;
         $_SESSION["active_time"] = time();
 
+        session_regenerate_id();
         session_write_close();
         $insert->close();
         $conn->close();

@@ -1,12 +1,29 @@
 <?php
 
+function start_secure_session(){
+    $params = session_get_cookie_params();
+    session_set_cookie_params(120, $params["path"], $params["domain"], TRUE, TRUE);
+    session_start();
+}
+
+function destroy_secure_session(){
+    $_SESSION = array();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 3600*24,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]);
+    }
+    session_destroy();
+}
+
 function isLoginSessionExpired() {
     $login_session_duration = 120;
     if(isset($_SESSION["username"])){
         if(((time() - $_SESSION["active_time"]) > $login_session_duration)){
             $_SESSION["logged"] = 0; //expired
-            $_SESSION = array();
-            session_destroy();
+            destroy_secure_session();
+            session_regenerate_id();
         }else{
             $_SESSION["logged"] = 1; //not expired
         }
