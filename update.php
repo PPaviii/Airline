@@ -11,9 +11,9 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 }
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
-    echo "NOT-OK";
-}else {
     updateColors();
+}else {
+    echo "NOT-OK";
 }
 
 ?>

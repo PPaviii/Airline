@@ -107,8 +107,6 @@ if($mine > 0){
     echo "</script>";
 }
 
-echo "<div id='div' style='display: none'></div>";
-
 $conn->close();
 
 ?>
@@ -220,10 +218,8 @@ $conn->close();
                 if(this.responseText === "NOT-OK"){
                     window.alert('Session expired. Log in and try again.');
                     window.location.href = 'login.php';
-                    return;
                 }else {
-                    document.getElementById("div").innerHTML = this.responseText;
-                    eval(this.responseText).display = "none";
+                    eval(this.responseText);
                 }
             }
         };
