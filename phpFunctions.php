@@ -26,7 +26,6 @@ function isLoginSessionExpired() {
         if(((time() - $_SESSION["active_time"]) > $login_session_duration)){
             $_SESSION["logged"] = 0; //expired
             destroy_secure_session();
-            session_regenerate_id();
         }else{
             $_SESSION["logged"] = 1; //not expired
         }

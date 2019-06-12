@@ -9,7 +9,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     isLoginSessionExpired();
 }
 
-if($_SESSION["logged"] == 1){
+if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
 
     $id = $_POST["seatId"];
     $id = strip_tags($id);
@@ -46,7 +46,7 @@ if($_SESSION["logged"] == 1){
             return;
         }else{
             if($result["Status"] == 0){ //I steal the reservation
-                $update = "UPDATE Seat SET Username = '" . $_SESSION["username"] . "', WHERE Seat = '" . $id . "'";
+                $update = "UPDATE Seat SET Username = '" . $_SESSION["username"] . "' WHERE Seat = '" . $id . "'";
                 $conn->query($update);
                 $conn->close();
 

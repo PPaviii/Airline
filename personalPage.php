@@ -59,7 +59,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-echo "<table>";
+echo "<table id='seatmap'>";
 
 echo "</tr>";
 for($i = 1; $i <= ROWS; $i++){
@@ -72,6 +72,32 @@ for($i = 1; $i <= ROWS; $i++){
     echo "</tr>";
 }
 echo "</table>";
+
+$idReserved = "SELECT Username, Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
+$idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
+
+$resIdR = $conn->query($idReserved);
+$resIdO = $conn->query($idOccupied);
+
+while ($row = $resIdR->fetch_assoc()){
+    if($_SESSION["username"] == $row["Username"]){
+        echo "<script type='text/javascript'>";
+        echo "document.getElementById('buy').style.display = 'block';";
+        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "yellow";';
+        echo "</script>";
+    }else {
+        echo "<script type='text/javascript'>";
+        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
+        echo "</script>";
+    }
+}
+
+while ($row = $resIdO->fetch_assoc()){
+    echo "<script type='text/javascript'>";
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
+    echo "</script>";
+}
 
 $reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 0";
 $occupied = "SELECT COUNT(*) AS Occ FROM Seat WHERE Status = 1";
@@ -87,9 +113,9 @@ $reserved = (int) $rowRes["Reserved"];
 $occupied = (int) $rowOcc["Occ"];
 $free = $total - $reserved - $occupied;
 
-echo "<p>Number of available seats: " . $free . "</p>";
-echo "<p>Number of reserved seats: " . $reserved . "</p>";
-echo "<p>Number of occupied seats: " . $occupied . "</p>";
+echo "<p id='free'>Number of available seats: " . $free . "</p>";
+echo "<p id='reserved'>Number of reserved seats: " . $reserved . "</p>";
+echo "<p id='occupied'>Number of occupied seats: " . $occupied . "</p>";
 echo "<p>Total number of seats: $total</p>";
 
 echo "<form action='index.php' method='post'>";
@@ -99,38 +125,13 @@ echo "<input type=\"hidden\" value=\"1\" name=\"lout\">";
 echo "<button type=\"submit\" name=\"logout\">Log Out</button>";
 echo "</form><br>";
 
-echo "<button onclick='window.location.reload()'>Update Seats</button>";
-
-echo "<form method='post' action='buyOk.php'>";
-echo "<button type=\"submit\" name=\"buy\">Buy!</button>";
-echo "</form>";
-
-$idReserved = "SELECT Username, Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
-$idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
-
-$resIdR = $conn->query($idReserved);
-$resIdO = $conn->query($idOccupied);
-
-while ($row = $resIdR->fetch_assoc()){
-    if($_SESSION["username"] == $row["Username"]){
-        echo "<script type='text/javascript'>";
-        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "yellow";';
-        echo "</script>";
-    }else {
-        echo "<script type='text/javascript'>";
-        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
-        echo "</script>";
-    }
-}
-
 session_write_close();
 
-while ($row = $resIdO->fetch_assoc()){
-    echo "<script type='text/javascript'>";
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
-    echo "</script>";
-}
+echo "<button onclick='updateMap()'>Update Seats</button><br><br>";
+
+echo "<form method='post' action='buyOk.php'>";
+echo "<button type=\"submit\" name=\"buy\" id=\"buy\" style='display: none'>Buy!</button>";
+echo "</form>";
 
 $conn->close();
 
@@ -152,6 +153,21 @@ $conn->close();
                 switch (this.responseText) {
                     case "OK":
                         window.alert("Reservation inserted successfully!");
+
+                        var free = document.getElementById("free").innerHTML;
+                        var valueF = parseInt(free.replace(/[^0-9\.]/g, ''), 10);
+                        valueF -= 1;
+                        document.getElementById("free").innerHTML = "Number of available seats: " + valueF;
+
+                        var reserved = document.getElementById("reserved").innerHTML;
+                        var valueR = parseInt(reserved.replace(/[^0-9\.]/g, ''), 10);
+                        valueR += 1;
+                        document.getElementById("reserved").innerHTML = "Number of reserved seats: " + valueR;
+
+                        if(valueR > 0){
+                            document.getElementById("buy").style.display = "block";
+                        }
+
                         document.getElementById(id).style.background = "yellow";
                         break;
                     case "InputError":
@@ -159,15 +175,41 @@ $conn->close();
                         break;
                     case "UNDO":
                         window.alert("Reservation deleted successfully!");
+
+                        var free2 = document.getElementById("free").innerHTML;
+                        var valueF2 = parseInt(free2.replace(/[^0-9\.]/g, ''), 10);
+                        valueF2 += 1;
+                        document.getElementById("free").innerHTML = "Number of available seats: " + valueF2;
+
+                        var reserved2 = document.getElementById("reserved").innerHTML;
+                        var valueR2 = parseInt(reserved2.replace(/[^0-9\.]/g, ''), 10);
+                        valueR2 -= 1;
+                        document.getElementById("reserved").innerHTML = "Number of reserved seats: " + valueR2;
+
+                        if(valueR2 === 0){
+                            document.getElementById("buy").style.display = "none";
+                        }
+
                         document.getElementById(id).style.background = "limegreen";
                         break;
                     case "Purchased":
                         window.alert("Sorry, the seat has already been purchased.");
+
+                        var free3 = document.getElementById("free").innerHTML;
+                        var valueF3 = parseInt(free3.replace(/[^0-9\.]/g, ''), 10);
+                        valueF3 -= 1;
+                        document.getElementById("free").innerHTML = "Number of available seats: " + valueF3;
+
+                        var occupied = document.getElementById("occupied").innerHTML;
+                        var valueO = parseInt(occupied.replace(/[^0-9\.]/g, ''), 10);
+                        valueO += 1;
+                        document.getElementById("occupied").innerHTML = "Number of occupied seats: " + valueO;
+
                         document.getElementById(id).style.background = "red";
                         document.getElementById(id).onclick = "null";
                         break;
                     case "NOT-OK":
-                        window.alert('You must be logged in to purchase a seat. Log in and try again.');
+                        window.alert('Session expired. Log in and try again.');
                         window.location.href = 'login.php';
                         break;
                     default:
@@ -180,6 +222,37 @@ $conn->close();
         xmlhttp.open("POST", "reserve.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("seatId=" + id);
+    }
+    
+    function updateMap() {
+        if (window.XMLHttpRequest) {
+            // code for modern browsers
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for old IE browsers
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                switch (this.responseText) {
+                    case "OK":
+                        document.getElementById("seatmap").innerHTML = "ciao";
+                        break;
+                    case "NOT-OK":
+                        window.alert('Session expired. Log in and try again.');
+                        window.location.href = 'login.php';
+                        break;
+                    default:
+                        window.alert('Unexpected error. Try Again');
+                        break;
+                }
+            }
+        };
+
+        xmlhttp.open("POST", "update.php", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send();
     }
 </script>
 

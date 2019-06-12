@@ -88,6 +88,25 @@ for($i = 1; $i <= ROWS; $i++){
 }
 echo "</table>";
 
+$idReserved = "SELECT Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
+$idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
+
+$resIdR = $conn->query($idReserved);
+$resIdO = $conn->query($idOccupied);
+
+while ($row = $resIdR->fetch_assoc()){
+    echo "<script type='text/javascript'>";
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
+    echo "</script>";
+}
+
+while ($row = $resIdO->fetch_assoc()){
+    echo "<script type='text/javascript'>";
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
+    echo "</script>";
+}
+
 $reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 0";
 $occupied = "SELECT COUNT(*) AS Occ FROM Seat WHERE Status = 1";
 $total = ROWS * COLUMNS;
@@ -109,25 +128,6 @@ echo "<p>Total number of seats: $total</p>";
 
 echo "<a href='login.php'>Sign In</a>&nbsp;&nbsp;&nbsp;&nbsp;";
 echo "<a href='register.php'>Sign Up</a>";
-
-$idReserved = "SELECT Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
-$idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
-
-$resIdR = $conn->query($idReserved);
-$resIdO = $conn->query($idOccupied);
-
-while ($row = $resIdR->fetch_assoc()){
-    echo "<script type='text/javascript'>";
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
-    echo "</script>";
-}
-
-while ($row = $resIdO->fetch_assoc()){
-    echo "<script type='text/javascript'>";
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
-    echo "</script>";
-}
 
 $conn->close();
 
