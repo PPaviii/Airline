@@ -51,7 +51,6 @@ if(isset($_POST["lout"]) && $_POST["lout"] == 1){
     $_SESSION["logged"] = 0;
     $_SESSION["error"] = 0;
     destroy_secure_session();
-    session_regenerate_id();
     header("HTTP/1.1 303 See Other");
     header("Location: index.php");
     exit();
@@ -119,16 +118,18 @@ $resIdO = $conn->query($idOccupied);
 
 while ($row = $resIdR->fetch_assoc()){
     echo "<script type='text/javascript'>";
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
     echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
     echo "</script>";
 }
 
 while ($row = $resIdO->fetch_assoc()){
     echo "<script type='text/javascript'>";
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
+    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
     echo "</script>";
 }
+
+$conn->close();
 
 ?>
 

@@ -45,9 +45,8 @@ $_SESSION["error"] = 0; //flush previous error in the login form
 
 /*
     status legend:
-        - 0: free
-        - 1: reserved
-        - 2: occupied
+        - 0: reserved
+        - 1: occupied
 */
 
 $servername = "localhost";
@@ -100,31 +99,40 @@ echo "<input type=\"hidden\" value=\"1\" name=\"lout\">";
 echo "<button type=\"submit\" name=\"logout\">Log Out</button>";
 echo "</form><br>";
 
-session_write_close();
+echo "<button onclick='window.location.reload()'>Update Seats</button>";
 
-echo "<form method='post'>";
-echo "<button type=\"submit\" name=\"update\" formaction='personalPage.php'>Update Seats</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp";
+echo "<form method='post' action='buyOk.php'>";
 echo "<button type=\"submit\" name=\"buy\">Buy!</button>";
 echo "</form>";
 
-$idReserved = "SELECT Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
+$idReserved = "SELECT Username, Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
 $idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
 
 $resIdR = $conn->query($idReserved);
 $resIdO = $conn->query($idOccupied);
 
 while ($row = $resIdR->fetch_assoc()){
+    if($_SESSION["username"] == $row["Username"]){
+        echo "<script type='text/javascript'>";
+        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "yellow";';
+        echo "</script>";
+    }else {
+        echo "<script type='text/javascript'>";
+        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
+        echo "</script>";
+    }
+}
+
+session_write_close();
+
+while ($row = $resIdO->fetch_assoc()){
     echo "<script type='text/javascript'>";
     echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
     echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
     echo "</script>";
 }
 
-while ($row = $resIdO->fetch_assoc()){
-    echo "<script type='text/javascript'>";
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
-    echo "</script>";
-}
+$conn->close();
 
 ?>
 
@@ -140,11 +148,31 @@ while ($row = $resIdO->fetch_assoc()){
 
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                if(this.responseText === 'OK') {
-                    document.getElementById(id).style.background = "yellow";
-                }else{
-                    window.alert('You must be logged in to purchase a seat. Log in and try again.');
-                    window.location.href = 'login.php';
+
+                switch (this.responseText) {
+                    case "OK":
+                        window.alert("Reservation inserted successfully!");
+                        document.getElementById(id).style.background = "yellow";
+                        break;
+                    case "InputError":
+                        window.alert('You sent an invalid seat id. Retry');
+                        break;
+                    case "UNDO":
+                        window.alert("Reservation deleted successfully!");
+                        document.getElementById(id).style.background = "limegreen";
+                        break;
+                    case "Purchased":
+                        window.alert("Sorry, the seat has already been purchased.");
+                        document.getElementById(id).style.background = "red";
+                        document.getElementById(id).onclick = "null";
+                        break;
+                    case "NOT-OK":
+                        window.alert('You must be logged in to purchase a seat. Log in and try again.');
+                        window.location.href = 'login.php';
+                        break;
+                    default:
+                        window.alert('Unexpected error. Try Again');
+                        break;
                 }
             }
         };
@@ -158,4 +186,3 @@ while ($row = $resIdO->fetch_assoc()){
 </div>
 </body>
 </html>
-

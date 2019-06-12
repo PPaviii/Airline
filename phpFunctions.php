@@ -1,8 +1,11 @@
 <?php
 
 function start_secure_session(){
+    $session_name = "sec_session";
+    ini_set("session.use_only_cookies", 1);
     $params = session_get_cookie_params();
-    session_set_cookie_params(120, $params["path"], $params["domain"], TRUE, TRUE);
+    session_set_cookie_params($params["lifetime"], $params["path"], $params["domain"], TRUE, TRUE);
+    session_name($session_name);
     session_start();
 }
 
