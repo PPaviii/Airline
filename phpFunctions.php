@@ -42,4 +42,146 @@ function enforceSSL(){
     }
 }
 
+function printMapIndex(){
+
+    $servername = "localhost";
+    $username = "s264970";
+    $password = "chalingt";
+
+    $conn = new mysqli($servername, $username, $password, "s264970");
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    echo "<table>";
+
+    echo "</tr>";
+    for($i = 1; $i <= ROWS; $i++){
+        echo"<tr>";
+        for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
+            $char = chr($x);
+            echo "<td id='$i$char' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+            echo $i . chr($x) . "</td>";
+        }
+        echo "</tr>";
+    }
+    echo "</table>";
+
+    $idReserved = "SELECT Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
+    $idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
+
+    $resIdR = $conn->query($idReserved);
+    $resIdO = $conn->query($idOccupied);
+
+    while ($row = $resIdR->fetch_assoc()){
+        echo "<script type='text/javascript'>";
+        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
+        echo "</script>";
+    }
+
+    while ($row = $resIdO->fetch_assoc()){
+        echo "<script type='text/javascript'>";
+        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
+        echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
+        echo "</script>";
+    }
+
+    $conn->close();
+}
+
+function printMapPersonalPage(){
+
+    $servername = "localhost";
+    $username = "s264970";
+    $password = "chalingt";
+
+    $conn = new mysqli($servername, $username, $password, "s264970");
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    echo "<table id='seatmap'>";
+
+    echo "</tr>";
+    for($i = 1; $i <= ROWS; $i++){
+        echo"<tr>";
+        for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
+            $char = chr($x);
+            echo "<td id='$i$char' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+            echo $i . chr($x) . "</td>";
+        }
+        echo "</tr>";
+    }
+    echo "</table>";
+
+    $idReserved = "SELECT Username, Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
+    $idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
+
+    $resIdR = $conn->query($idReserved);
+    $resIdO = $conn->query($idOccupied);
+
+    while ($row = $resIdR->fetch_assoc()){
+
+        if($_SESSION["username"] == $row["Username"]){
+            echo "<script type='text/javascript'>";
+            echo "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"yellow\";";
+            echo "</script>";
+        }else {
+            echo "<script type='text/javascript'>";
+            echo "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"orange\";";
+            echo "</script>";
+        }
+    }
+
+    while ($row = $resIdO->fetch_assoc()){
+        echo "<script type='text/javascript'>";
+        echo "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"red\";";
+        echo "document.getElementById(\"" . $row["Seat"] . "\").onclick = \"null\";";
+        echo "</script>";
+    }
+}
+
+function updateColors(){
+
+    $servername = "localhost";
+    $username = "s264970";
+    $password = "chalingt";
+
+    $conn = new mysqli($servername, $username, $password, "s264970");
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $idReserved = "SELECT Username, Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
+    $idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
+
+    $resIdR = $conn->query($idReserved);
+    $resIdO = $conn->query($idOccupied);
+
+    while ($row = $resIdR->fetch_assoc()){
+
+        if($_SESSION["username"] == $row["Username"]){
+            //$script = "<script type='text/javascript' id='runscript'>";
+            $script = "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"yellow\";";
+            //echo "</script>";
+        }else {
+            //echo "<script type='text/javascript'>";
+            $script .= "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"orange\";";
+            //echo "</script>";
+        }
+    }
+
+    while ($row = $resIdO->fetch_assoc()){
+        //echo "<script type='text/javascript'>";
+        $script .= "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"red\";";
+        $script .= "document.getElementById(\"" . $row["Seat"] . "\").onclick = \"null\";";
+        //$script .= "</script>";
+    }
+
+    echo $script;
+}
+
 ?>

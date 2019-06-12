@@ -59,45 +59,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-echo "<table id='seatmap'>";
-
-echo "</tr>";
-for($i = 1; $i <= ROWS; $i++){
-    echo"<tr>";
-    for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
-        $char = chr($x);
-        echo "<td id='$i$char' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
-        echo $i . chr($x) . "</td>";
-    }
-    echo "</tr>";
-}
-echo "</table>";
-
-$idReserved = "SELECT Username, Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
-$idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
-
-$resIdR = $conn->query($idReserved);
-$resIdO = $conn->query($idOccupied);
-
-while ($row = $resIdR->fetch_assoc()){
-    if($_SESSION["username"] == $row["Username"]){
-        echo "<script type='text/javascript'>";
-        echo "document.getElementById('buy').style.display = 'block';";
-        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "yellow";';
-        echo "</script>";
-    }else {
-        echo "<script type='text/javascript'>";
-        echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
-        echo "</script>";
-    }
-}
-
-while ($row = $resIdO->fetch_assoc()){
-    echo "<script type='text/javascript'>";
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
-    echo "</script>";
-}
+printMapPersonalPage();
 
 $reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 0";
 $occupied = "SELECT COUNT(*) AS Occ FROM Seat WHERE Status = 1";
@@ -132,6 +94,20 @@ echo "<button onclick='updateMap()'>Update Seats</button><br><br>";
 echo "<form method='post' action='buyOk.php'>";
 echo "<button type=\"submit\" name=\"buy\" id=\"buy\" style='display: none'>Buy!</button>";
 echo "</form>";
+
+$anyMine = "SELECT COUNT(*) AS Mine FROM Seat WHERE Status = 0 AND Username = '" . $_SESSION["username"] . "'";
+$resMine = $conn->query($anyMine);
+$rowMine = $resMine->fetch_assoc();
+
+$mine = (int) $rowMine["Mine"];
+
+if($mine > 0){
+    echo "<script>";
+    echo "document.getElementById(\"buy\").style.display = \"block\";";
+    echo "</script>";
+}
+
+echo "<div id='div' style='display: none'></div>";
 
 $conn->close();
 
@@ -170,9 +146,11 @@ $conn->close();
 
                         document.getElementById(id).style.background = "yellow";
                         break;
+
                     case "InputError":
                         window.alert('You sent an invalid seat id. Retry');
                         break;
+
                     case "UNDO":
                         window.alert("Reservation deleted successfully!");
 
@@ -192,6 +170,7 @@ $conn->close();
 
                         document.getElementById(id).style.background = "limegreen";
                         break;
+
                     case "Purchased":
                         window.alert("Sorry, the seat has already been purchased.");
 
@@ -208,10 +187,12 @@ $conn->close();
                         document.getElementById(id).style.background = "red";
                         document.getElementById(id).onclick = "null";
                         break;
+
                     case "NOT-OK":
                         window.alert('Session expired. Log in and try again.');
                         window.location.href = 'login.php';
                         break;
+
                     default:
                         window.alert('Unexpected error. Try Again');
                         break;
@@ -225,6 +206,7 @@ $conn->close();
     }
     
     function updateMap() {
+
         if (window.XMLHttpRequest) {
             // code for modern browsers
             xmlhttp = new XMLHttpRequest();
@@ -235,17 +217,13 @@ $conn->close();
 
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                switch (this.responseText) {
-                    case "OK":
-                        document.getElementById("seatmap").innerHTML = "ciao";
-                        break;
-                    case "NOT-OK":
-                        window.alert('Session expired. Log in and try again.');
-                        window.location.href = 'login.php';
-                        break;
-                    default:
-                        window.alert('Unexpected error. Try Again');
-                        break;
+                if(this.responseText === "NOT-OK"){
+                    window.alert('Session expired. Log in and try again.');
+                    window.location.href = 'login.php';
+                    return;
+                }else {
+                    document.getElementById("div").innerHTML = this.responseText;
+                    eval(this.responseText).display = "none";
                 }
             }
         };

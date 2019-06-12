@@ -74,38 +74,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-echo "<table>";
-
-echo "</tr>";
-for($i = 1; $i <= ROWS; $i++){
-    echo"<tr>";
-    for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
-        $char = chr($x);
-        echo "<td id='$i$char' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
-        echo $i . chr($x) . "</td>";
-    }
-    echo "</tr>";
-}
-echo "</table>";
-
-$idReserved = "SELECT Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
-$idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
-
-$resIdR = $conn->query($idReserved);
-$resIdO = $conn->query($idOccupied);
-
-while ($row = $resIdR->fetch_assoc()){
-    echo "<script type='text/javascript'>";
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
-    echo "</script>";
-}
-
-while ($row = $resIdO->fetch_assoc()){
-    echo "<script type='text/javascript'>";
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
-    echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
-    echo "</script>";
-}
+printMapIndex();
 
 $reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 0";
 $occupied = "SELECT COUNT(*) AS Occ FROM Seat WHERE Status = 1";
