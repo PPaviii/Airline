@@ -125,6 +125,9 @@ function printMapPersonalPage(){
     while ($row = $resIdR->fetch_assoc()){
 
         if($_SESSION["username"] == $row["Username"]){
+            $tmp = $_SESSION["myReserved"];
+            $tmp += 1;
+            $_SESSION["myReserved"] = $tmp;
             echo "<script type='text/javascript'>";
             echo "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"yellow\";";
             echo "</script>";
@@ -141,6 +144,7 @@ function printMapPersonalPage(){
         echo "document.getElementById(\"" . $row["Seat"] . "\").onclick = \"null\";";
         echo "</script>";
     }
+
 }
 
 function updateColors(){
@@ -161,11 +165,13 @@ function updateColors(){
     $resIdR = $conn->query($idReserved);
     $resIdO = $conn->query($idOccupied);
 
+    $script = "";
+
     while ($row = $resIdR->fetch_assoc()){
 
         if($_SESSION["username"] == $row["Username"]){
-            //$script = "<script type='text/javascript' id='runscript'>";
-            $script = "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"yellow\";";
+            //$script = "<script type='text/javascript'>";
+            $script .= "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"yellow\";";
             //echo "</script>";
         }else {
             //echo "<script type='text/javascript'>";

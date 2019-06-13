@@ -9,6 +9,8 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     isLoginSessionExpired();
 }
 
+$_SESSION["active_time"] = time();
+
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
 
     $id = $_POST["seatId"];
@@ -38,6 +40,10 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
     if($result != NULL){
         if($result["Username"] == $_SESSION["username"]){
 
+            $tmp = $_SESSION["myReserved"];
+            $tmp -= 1;
+            $_SESSION["myReserved"] = $tmp;
+
             $delete = "DELETE FROM Seat WHERE Seat = '" . $id . "'";
             $conn->query($delete);
             $conn->close();
@@ -49,6 +55,10 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
                 $update = "UPDATE Seat SET Username = '" . $_SESSION["username"] . "' WHERE Seat = '" . $id . "'";
                 $conn->query($update);
                 $conn->close();
+
+                $tmp = $_SESSION["myReserved"];
+                $tmp += 1;
+                $_SESSION["myReserved"] = $tmp;
 
                 echo "OK";
                 return;
@@ -62,6 +72,10 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
     }
 
     $insert = "INSERT INTO Seat (Seat, Status, Username) VALUES ('" . $id ."', 0, '" . $_SESSION["username"] . "')";
+
+    $tmp = $_SESSION["myReserved"];
+    $tmp += 1;
+    $_SESSION["myReserved"] = $tmp;
 
     $conn->query($insert);
     $conn->close();

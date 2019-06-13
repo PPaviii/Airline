@@ -42,6 +42,7 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0){
 }
 
 $_SESSION["error"] = 0; //flush previous error in the login form
+$_SESSION["myReserved"] = 0; //flush reserved counter
 
 /*
     status legend:
@@ -71,13 +72,13 @@ $resOcc = $conn->query($occupied);
 $rowRes = $resRes->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
-$reserved = (int) $rowRes["Reserved"];
-$occupied = (int) $rowOcc["Occ"];
-$free = $total - $reserved - $occupied;
+$reservedTot = (int) $rowRes["Reserved"];
+$occupiedTot = (int) $rowOcc["Occ"];
+$free = $total - $reservedTot - $occupiedTot;
 
 echo "<p id='free'>Number of available seats: " . $free . "</p>";
-echo "<p id='reserved'>Number of reserved seats: " . $reserved . "</p>";
-echo "<p id='occupied'>Number of occupied seats: " . $occupied . "</p>";
+echo "<p id='reserved'>Number of reserved seats: " . $reservedTot . "</p>";
+echo "<p id='occupied'>Number of occupied seats: " . $occupiedTot . "</p>";
 echo "<p>Total number of seats: $total</p>";
 
 echo "<form action='index.php' method='post'>";
@@ -108,6 +109,24 @@ if($mine > 0){
 }
 
 $conn->close();
+
+if(isset($_SESSION["ok"]) && $_SESSION["ok"] == 1){
+    $_SESSION["ok"] = 0;
+    unset($_SESSION["ok"]);
+    echo "<script type='text/javascript'>";
+    echo "window.alert('The seats were purchased correctly.')";
+    echo "window.location.reload()";
+    echo "</script>";
+}
+
+if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
+    $_SESSION["notok"] = 0;
+    unset($_SESSION["notok"]);
+    echo "<script type='text/javascript'>";
+    echo "window.alert('The seats can't be purchased. Someone stolen you at least one seat!')";
+    echo "window.location.reload()";
+    echo "</script>";
+}
 
 ?>
 

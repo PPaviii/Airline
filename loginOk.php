@@ -29,7 +29,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 
 $_SESSION["active_time"] = time();
 
-if($_SESSION["logged"] == 0) {
+if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
 
     if (!isset($_POST["user"]) && !isset($_POST["pass"])) {
         echo "<h2>A problem has occurred</h2>";
