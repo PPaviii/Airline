@@ -37,6 +37,8 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 $_SESSION["active_time"] = time();
 $_SESSION["error"] = 0; //flush previous error in the login form
 $_SESSION["notPresent"] = 0;
+$_SESSION["ok"] = 0; //flush variables to print alert when purchasing
+$_SESSION["notok"] = 0;
 
 if(!isset($_SESSION["logged"])){
     $_SESSION["logged"] = 0;

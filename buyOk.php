@@ -49,7 +49,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     $resRes = $conn->query($reserved);
     $rowRes = $resRes->fetch_assoc();
     $reservedMine = (int) $rowRes["Reserved"];
-
+/*
     if($reservedMine === 0){
         echo "<script type='text/javascript'>";
         echo "window.alert('Please select at least one seat!');";
@@ -57,7 +57,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
         echo "</script>";
         return;
     }
-
+*/
     if($myReserved === $reservedMine){ //I purchase all my seats
         $update = "UPDATE Seat SET Status = 1 WHERE Username = '" . $_SESSION["username"] . "'";
         $conn->query($update);
@@ -67,8 +67,15 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 
         header("HTTP/1.1 303 See Other");
         header("Location: personalPage.php");
-        exit();
+
+/*
+        echo "<script type='text/javascript'>";
+        echo "window.alert('The seats were purchased correctly.');";
+        echo "window.location.replace('personalPage.php');";
+        echo "</script>";
+*/
     }else{ //someone stole at leat one seat, I free all my seats
+
         $delete = "DELETE FROM Seat WHERE Username = '" . $_SESSION["username"] . "'";
         $conn->query($delete);
         $conn->close();
@@ -77,7 +84,12 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 
         header("HTTP/1.1 303 See Other");
         header("Location: personalPage.php");
-        exit();
+/*
+        echo "<script type='text/javascript'>";
+        echo "window.alert('The seats can't be purchased. Someone stolen you at least one seat!');";
+        echo "window.location.replace('personalPage.php');";
+        echo "</script>";
+*/
     }
 
 }else{

@@ -64,21 +64,26 @@ if ($conn->connect_error) {
 printMapPersonalPage();
 
 $reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 0";
+$reservedMe = "SELECT COUNT(*) AS ReservedMe FROM Seat WHERE Status = 0 AND Username = '" . $_SESSION["username"] . "'";
 $occupied = "SELECT COUNT(*) AS Occ FROM Seat WHERE Status = 1";
 $total = ROWS * COLUMNS;
 
 $resRes = $conn->query($reserved);
+$resResMe = $conn->query($reservedMe);
 $resOcc = $conn->query($occupied);
 
 $rowRes = $resRes->fetch_assoc();
+$rowResMe = $resResMe->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
+$reservedTotMe = (int) $rowResMe["ReservedMe"];
 $reservedTot = (int) $rowRes["Reserved"];
 $occupiedTot = (int) $rowOcc["Occ"];
 $free = $total - $reservedTot - $occupiedTot;
 
 echo "<p id='free'>Number of available seats: " . $free . "</p>";
 echo "<p id='reserved'>Number of reserved seats: " . $reservedTot . "</p>";
+echo "<p id='reservedMe'>Number of seats you have reserved: " . $reservedTotMe . "</p>";
 echo "<p id='occupied'>Number of occupied seats: " . $occupiedTot . "</p>";
 echo "<p>Total number of seats: $total</p>";
 
@@ -115,8 +120,8 @@ if(isset($_SESSION["ok"]) && $_SESSION["ok"] == 1){
     $_SESSION["ok"] = 0;
     unset($_SESSION["ok"]);
     echo "<script type='text/javascript'>";
-    echo "window.alert('The seats were purchased correctly.')";
-    echo "window.location.reload()";
+    echo "window.alert('The seats were purchased correctly.');";
+    echo "window.location.href = 'index.php';";
     echo "</script>";
 }
 
@@ -124,8 +129,8 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
     $_SESSION["notok"] = 0;
     unset($_SESSION["notok"]);
     echo "<script type='text/javascript'>";
-    echo "window.alert('The seats can't be purchased. Someone stolen you at least one seat!')";
-    echo "window.location.reload()";
+    echo "window.alert('Purchase cannot be completed, someone stolen you at least one seat!');";
+    echo "window.location.href = 'index.php';";
     echo "</script>";
 }
 
@@ -158,7 +163,12 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         valueR += 1;
                         document.getElementById("reserved").innerHTML = "Number of reserved seats: " + valueR;
 
-                        if(valueR > 0){
+                        var reservedMe = document.getElementById("reservedMe").innerHTML;
+                        var valueRMe = parseInt(reservedMe.replace(/[^0-9\.]/g, ''), 10);
+                        valueRMe += 1;
+                        document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + valueRMe;
+
+                        if(valueRMe > 0){
                             document.getElementById("buy").style.display = "block";
                         }
 
@@ -182,7 +192,12 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         valueR2 -= 1;
                         document.getElementById("reserved").innerHTML = "Number of reserved seats: " + valueR2;
 
-                        if(valueR2 === 0){
+                        var reservedMe2 = document.getElementById("reservedMe").innerHTML;
+                        var valueRMe2 = parseInt(reservedMe2.replace(/[^0-9\.]/g, ''), 10);
+                        valueRMe2 -= 1;
+                        document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + valueRMe2;
+
+                        if(valueRMe2 === 0){
                             document.getElementById("buy").style.display = "none";
                         }
 
@@ -196,6 +211,16 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         var valueF3 = parseInt(free3.replace(/[^0-9\.]/g, ''), 10);
                         valueF3 -= 1;
                         document.getElementById("free").innerHTML = "Number of available seats: " + valueF3;
+
+                        var reserved3 = document.getElementById("reserved").innerHTML;
+                        var valueR3 = parseInt(reserved3.replace(/[^0-9\.]/g, ''), 10);
+                        valueR3 -= 1;
+                        document.getElementById("reserved").innerHTML = "Number of reserved seats: " + valueR3;
+
+                        var reservedMe3 = document.getElementById("reservedMe").innerHTML;
+                        var valueRMe3 = parseInt(reservedMe3.replace(/[^0-9\.]/g, ''), 10);
+                        valueRMe3 -= 1;
+                        document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + valueRMe3;
 
                         var occupied = document.getElementById("occupied").innerHTML;
                         var valueO = parseInt(occupied.replace(/[^0-9\.]/g, ''), 10);
