@@ -7,7 +7,8 @@
     </noscript>
     <meta charset="UTF-8">
     <title>AirFra Home Page</title>
-    <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/style.css">
+    <script type="text/javascript" src="jsFunctions.js"></script>
     <script>
         if(!navigator.cookieEnabled){
             document.write("<p>This page needs Cookies activated to work correctly.</p>");
@@ -18,8 +19,6 @@
 <body>
 
 <div id="div">
-
-<h2>AirFra Homepage</h2>
 
 <?php
 
@@ -77,6 +76,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+echo "<div id='nav'>";
+echo "<ul>";
+echo "<li><a href='login.php'>Sign In</a></li>";
+echo "<li><a href='register.php'>Sign Up</a></li>";
+echo "</ul>";
+echo "</div>";
+
 printMapIndex();
 
 $reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 0";
@@ -93,13 +99,12 @@ $reserved = (int) $rowRes["Reserved"];
 $occupied = (int) $rowOcc["Occ"];
 $free = $total - $reserved - $occupied;
 
-echo "<p>Number of available seats: " . $free . "</p>";
+echo "<div id='info'>";
+echo "<p style='margin-top: 91%'>Number of available seats: " . $free . "</p>";
 echo "<p>Number of reserved seats: " . $reserved . "</p>";
 echo "<p>Number of occupied seats: " . $occupied . "</p>";
 echo "<p>Total number of seats: $total</p>";
-
-echo "<a href='login.php'>Sign In</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-echo "<a href='register.php'>Sign Up</a>";
+echo "</div>";
 
 $conn->close();
 

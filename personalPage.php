@@ -6,7 +6,8 @@
     </noscript>
     <meta charset="UTF-8">
     <title>AirFra Personal Home Page</title>
-    <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/style.css">
+    <script type="text/javascript" src="jsFunctions.js"></script>
     <script>
         if(!navigator.cookieEnabled){
             document.write("<style>div { display:none; }</style>");
@@ -15,9 +16,7 @@
 </head>
 <body>
 
-<div>
-
-<h2>AirFra Personal Homepage</h2>
+<div id="main">
 
 <?php
 
@@ -61,6 +60,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+echo "<div id='nav'>";
+echo "<ul>";
+echo "<li><a onclick='updateMap()'>Update Seats</a></li>";
+echo "<li id='buy' style='opacity: 0.2'><a id='buyl' style='pointer-events: none' href='buyOk.php'>Buy!</a></li>";
+echo "</ul>";
+echo "</div>";
+
 printMapPersonalPage();
 
 $reserved = "SELECT COUNT(*) AS Reserved FROM Seat WHERE Status = 0";
@@ -81,12 +87,7 @@ $reservedTot = (int) $rowRes["Reserved"];
 $occupiedTot = (int) $rowOcc["Occ"];
 $free = $total - $reservedTot - $occupiedTot;
 
-echo "<p id='free'>Number of available seats: " . $free . "</p>";
-echo "<p id='reserved'>Number of reserved seats: " . $reservedTot . "</p>";
-echo "<p id='reservedMe'>Number of seats you have reserved: " . $reservedTotMe . "</p>";
-echo "<p id='occupied'>Number of occupied seats: " . $occupiedTot . "</p>";
-echo "<p>Total number of seats: $total</p>";
-
+echo "<div id='info'>";
 echo "<form action='index.php' method='post'>";
 echo "<p style='color:green'>Hi, " . $_SESSION["username"] . ".</p>";
 echo "<p style='color: green'>Now you are logged in and you can purchase airplane seats.</p>";
@@ -94,13 +95,14 @@ echo "<input type=\"hidden\" value=\"1\" name=\"lout\">";
 echo "<button type=\"submit\" name=\"logout\">Log Out</button>";
 echo "</form><br>";
 
+echo "<p id='free' style='margin-top: 45%'>Number of available seats: " . $free . "</p>";
+echo "<p id='reserved'>Number of reserved seats: " . $reservedTot . "</p>";
+echo "<p id='reservedMe'>Number of seats you have reserved: " . $reservedTotMe . "</p>";
+echo "<p id='occupied'>Number of occupied seats: " . $occupiedTot . "</p>";
+echo "<p>Total number of seats: $total</p>";
+echo "</div>";
+
 session_write_close();
-
-echo "<button onclick='updateMap()'>Update Seats</button><br><br>";
-
-echo "<form method='post' action='buyOk.php'>";
-echo "<button type=\"submit\" name=\"buy\" id=\"buy\" style='display: none'>Buy!</button>";
-echo "</form>";
 
 $anyMine = "SELECT COUNT(*) AS Mine FROM Seat WHERE Status = 0 AND Username = '" . $_SESSION["username"] . "'";
 $resMine = $conn->query($anyMine);
@@ -109,16 +111,15 @@ $rowMine = $resMine->fetch_assoc();
 $mine = (int) $rowMine["Mine"];
 
 if($mine > 0){
-    echo "<script>";
-    echo "document.getElementById(\"buy\").style.display = \"block\";";
+    echo "<script type='text/javascript'>";
+    echo "document.getElementById(\"buy\").style.opacity = \"1\";";
+    echo "document.getElementById(\"buyl\").style.pointerEvents = \"visible\";";
     echo "</script>";
 }
 
 $conn->close();
 
 if(isset($_SESSION["ok"]) && $_SESSION["ok"] == 1){
-    $_SESSION["ok"] = 0;
-    unset($_SESSION["ok"]);
     echo "<script type='text/javascript'>";
     echo "window.alert('The seats were purchased correctly.');";
     echo "window.location.href = 'index.php';";
@@ -126,8 +127,6 @@ if(isset($_SESSION["ok"]) && $_SESSION["ok"] == 1){
 }
 
 if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
-    $_SESSION["notok"] = 0;
-    unset($_SESSION["notok"]);
     echo "<script type='text/javascript'>";
     echo "window.alert('Purchase cannot be completed, someone stolen you at least one seat!');";
     echo "window.location.href = 'index.php';";
@@ -169,7 +168,8 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + valueRMe;
 
                         if(valueRMe > 0){
-                            document.getElementById("buy").style.display = "block";
+                            document.getElementById("buy").style.opacity = "1";
+                            document.getElementById("buyl").style.pointerEvents = "visible";
                         }
 
                         document.getElementById(id).style.background = "yellow";
@@ -198,7 +198,8 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + valueRMe2;
 
                         if(valueRMe2 === 0){
-                            document.getElementById("buy").style.display = "none";
+                            document.getElementById("buy").style.opacity = "0.2";
+                            document.getElementById("buyl").style.pointerEvents = "none";
                         }
 
                         document.getElementById(id).style.background = "limegreen";

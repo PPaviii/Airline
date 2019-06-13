@@ -54,6 +54,10 @@ function printMapIndex(){
         die("Connection failed: " . $conn->connect_error);
     }
 
+    echo "<div id='map'>";
+
+    echo "<h2>AirFra Home Page</h2>";
+
     echo "<table>";
 
     echo "</tr>";
@@ -61,12 +65,13 @@ function printMapIndex(){
         echo"<tr>";
         for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
             $char = chr($x);
-            echo "<td id='$i$char' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+            echo "<td id='$i$char' onmouseover='darker(this.id)' onmouseout='normal(this.id)' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
             echo $i . chr($x) . "</td>";
         }
         echo "</tr>";
     }
     echo "</table>";
+    echo "</div>";
 
     $idReserved = "SELECT Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
     $idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
@@ -102,6 +107,10 @@ function printMapPersonalPage(){
         die("Connection failed: " . $conn->connect_error);
     }
 
+    echo "<div id='map'>";
+
+    echo "<h2>AirFra Personal Home Page</h2>";
+
     echo "<table id='seatmap'>";
 
     echo "</tr>";
@@ -109,12 +118,13 @@ function printMapPersonalPage(){
         echo"<tr>";
         for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
             $char = chr($x);
-            echo "<td id='$i$char' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+            echo "<td id='$i$char' onmouseover='darker(this.id)' onmouseout='normal(this.id)' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
             echo $i . chr($x) . "</td>";
         }
         echo "</tr>";
     }
     echo "</table>";
+    echo "</div>";
 
     $idReserved = "SELECT Username, Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
     $idOccupied = "SELECT Seat FROM Seat WHERE Status = 1"; //id of all occupied seats
