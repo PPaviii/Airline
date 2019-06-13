@@ -238,7 +238,12 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                     window.alert('Session expired. Log in and try again.');
                     window.location.href = 'login.php';
                 }else {
-                    eval(this.responseText);
+                    var colors = this.responseText.split(" ");
+
+                    for(var i = 0; i < colors.length -1; i++){
+                        document.getElementById(colors[i]).style.background = colors[++i];
+                    }
+
                 }
             }
         };

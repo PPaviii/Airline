@@ -165,29 +165,25 @@ function updateColors(){
     $resIdR = $conn->query($idReserved);
     $resIdO = $conn->query($idOccupied);
 
-    $script = "";
+    $seatNcolors = "";
 
     while ($row = $resIdR->fetch_assoc()){
 
         if($_SESSION["username"] == $row["Username"]){
-            //$script = "<script type='text/javascript'>";
-            $script .= "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"yellow\";";
-            //echo "</script>";
+            $seatNcolors .= $row["Seat"] . " ";
+            $seatNcolors .= "yellow ";
         }else {
-            //echo "<script type='text/javascript'>";
-            $script .= "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"orange\";";
-            //echo "</script>";
+            $seatNcolors .= $row["Seat"] . " ";
+            $seatNcolors .= "orange ";
         }
     }
 
     while ($row = $resIdO->fetch_assoc()){
-        //echo "<script type='text/javascript'>";
-        $script .= "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"red\";";
-        $script .= "document.getElementById(\"" . $row["Seat"] . "\").onclick = \"null\";";
-        //$script .= "</script>";
+        $seatNcolors .= $row["Seat"] . " ";
+        $seatNcolors .= "red ";
     }
-
-    echo $script;
+    
+    echo $seatNcolors;
 }
 
 ?>
