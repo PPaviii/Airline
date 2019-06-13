@@ -34,7 +34,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 $_SESSION["active_time"] = time();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
-    echo "<p>You are already registered</p><br>";
+    echo "<p>You are already registered and logged in.</p><br>";
     echo "<a href='personalPage.php'>Return to the Personal Home page</a>";
     return;
 }

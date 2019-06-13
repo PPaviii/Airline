@@ -5,7 +5,7 @@
         <style>div { display:none; }</style>
     </noscript>
     <meta charset="UTF-8">
-    <title>Airline Personal Home Page</title>
+    <title>AirFra Personal Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
     <script>
         if(!navigator.cookieEnabled){
@@ -42,6 +42,7 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0){
 }
 
 $_SESSION["error"] = 0; //flush previous error in the login form
+$_SESSION["notPresent"] = 0;
 $_SESSION["myReserved"] = 0; //flush reserved counter
 
 /*
@@ -239,8 +240,15 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                     window.location.href = 'login.php';
                 }else {
                     var colors = this.responseText.split(" ");
+                    var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-                    for(var i = 0; i < colors.length -1; i++){
+                    for(var j = 1; j <= colors[0]; j++){ //colors[0] = rows
+                        for(var f = 0; f < colors[1]; f++) { //colors[1] = columns
+                            document.getElementById(j + alphabet[f]).style.background = "limegreen";
+                        }
+                    }
+
+                    for(var i = 2; i < colors.length -1; i++){
                         document.getElementById(colors[i]).style.background = colors[++i];
                     }
 

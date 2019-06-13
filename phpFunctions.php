@@ -166,6 +166,7 @@ function updateColors(){
     $resIdO = $conn->query($idOccupied);
 
     $seatNcolors = "";
+    $seatNcolors .= ROWS . " " . COLUMNS . " ";
 
     while ($row = $resIdR->fetch_assoc()){
 
@@ -182,7 +183,7 @@ function updateColors(){
         $seatNcolors .= $row["Seat"] . " ";
         $seatNcolors .= "red ";
     }
-    
+
     echo $seatNcolors;
 }
 

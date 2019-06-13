@@ -6,7 +6,7 @@
         <style>div { display:none; }</style>
     </noscript>
     <meta charset="UTF-8">
-    <title>Airline Home Page</title>
+    <title>AirFra Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/table.css">
     <script>
         if(!navigator.cookieEnabled){
@@ -35,8 +35,8 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 }
 
 $_SESSION["active_time"] = time();
-
 $_SESSION["error"] = 0; //flush previous error in the login form
+$_SESSION["notPresent"] = 0;
 
 if(!isset($_SESSION["logged"])){
     $_SESSION["logged"] = 0;
@@ -50,6 +50,7 @@ if(!isset($_SESSION["logged"])){
 if(isset($_POST["lout"]) && $_POST["lout"] == 1){
     $_SESSION["logged"] = 0;
     $_SESSION["error"] = 0;
+    $_SESSION["notPresent"] = 0;
     destroy_secure_session();
     header("HTTP/1.1 303 See Other");
     header("Location: index.php");

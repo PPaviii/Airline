@@ -32,6 +32,7 @@ $_SESSION["active_time"] = time();
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 
     $myReserved = $_SESSION["myReserved"];
+
     $_SESSION["myReserved"] = 0; //flush reserved seats
 
     $servername = "localhost";
@@ -48,6 +49,14 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     $resRes = $conn->query($reserved);
     $rowRes = $resRes->fetch_assoc();
     $reservedMine = (int) $rowRes["Reserved"];
+
+    if($reservedMine === 0){
+        echo "<script type='text/javascript'>";
+        echo "window.alert('Please select at least one seat!');";
+        echo "window.location.replace('personalPage.php');";
+        echo "</script>";
+        return;
+    }
 
     if($myReserved === $reservedMine){ //I purchase all my seats
         $update = "UPDATE Seat SET Status = 1 WHERE Username = '" . $_SESSION["username"] . "'";

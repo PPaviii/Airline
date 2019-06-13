@@ -50,6 +50,7 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
             echo "window.alert('Error: please insert a valid e-mail.');";
             echo "window.location.replace('register.php');";
             echo "</script>";
+            return;
         }
 
         if (!preg_match('/^(([a-z]*)+([A-Z]|\d)+[a-z]+)|(([a-z]+)+([A-Z]|\d)+([a-z]*))$/', $pass)) {
@@ -57,6 +58,7 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
             echo "window.alert('Error: please insert a valid password.');";
             echo "window.location.replace('register.php');";
             echo "</script>";
+            return;
         }
 
         $servername = "localhost";
@@ -95,8 +97,8 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
             $conn->close();
 
             echo "<script type='text/javascript'>";
-            echo "window.alert('The username you inserted already exists. Try again.');";
-            echo "window.location.replace('register.php');";
+            echo "window.alert('The username you inserted already exists. Please Log In.');";
+            echo "window.location.replace('login.php');";
             echo "</script>";
         } else {
             session_write_close();

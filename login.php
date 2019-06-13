@@ -63,6 +63,10 @@ if (isset($_SESSION["error"]) && $_SESSION["error"] == 1) {
     echo "<br><br><p style='color: red'>Error: wrong username or password. Retry.</p><br>";
 }
 
+if (isset($_SESSION["notPresent"]) && $_SESSION["notPresent"] == 1) {
+    echo "<br><br><p style='color: red'>Error: your username is not present in the database. Please Sign Up.</p><br>";
+}
+
 ?>
 
 </div>
