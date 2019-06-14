@@ -54,24 +54,24 @@ session_write_close();
     </div>
 
 <br><form id="register" action='registerOk.php' method='post' onsubmit="return check();">
-    <p>
+    <p title="Insert a valid e-mail">
     <label for="user">E-mail:</label>
     <input type="email" name="user" id="name" placeholder="john@doe.us" style="text-align: center">
     </p><br>
 
-    <p>
+    <p title="The password has to contain at least one lowercase letter and one character which is either uppercase or a digit">
     <label for="pass">Password:</label>
     <input type="password" name="pass1" id="pass1" placeholder="********" style="text-align: center">
     </p><br>
 
-    <p>
-        <label for="pass">Repeat Password:&nbsp;&nbsp;</label>
+    <p title="Please, insert again the selected password">
+        <label for="pass">Repeat Password:&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <input type="password" name="pass2" id="pass2" placeholder="********" style="text-align: center">
     </p><br>
 
     <p>
         <label></label>
-    <button type="submit" id="submit "name="submit">Sign Up</button><br><br>
+    <button title="Submit the form" type="submit" id="submit "name="submit">Sign Up</button><br><br>
     </p>
 </form>
 

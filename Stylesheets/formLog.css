@@ -44,7 +44,7 @@ label { display: table-cell; margin: auto }
 input { display: table-cell; margin: auto; border: 2px solid lightgrey; border-radius: 3px; padding: 3% }
 
 h2 {
-    font-size: 180%;
+    font-size: 200%;
 }
 
 input:focus {
@@ -54,6 +54,7 @@ input:focus {
 * {
     font-family: sans-serif;
     text-align: center;
+    font-size: 100%;
 }
 
 .active {
@@ -61,3 +62,4 @@ input:focus {
     color: white;
     border-radius: 5px;
 }
+

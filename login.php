@@ -50,19 +50,19 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     </div>
 
 <br><form id="login" action='loginOk.php' method='post'>
-    <p>
+    <p title="Insert the e-mail you inserted in the registration phase">
         <label for="user">E-mail:</label>
         <input type="email" name="user" id="name" placeholder="john@doe.us" style="text-align: center">
     </p><br>
 
-    <p>
-        <label for="pass">Password:&nbsp;&nbsp;</label>
+    <p title="Insert your secret password">
+        <label for="pass">Password:&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <input type="password" name="pass" id="pass" placeholder="********" style="text-align: center">
     </p><br>
 
     <p>
         <label></label>
-    <button type="submit" name="submit" id="submit">Sign In</button><br><br>
+    <button title="Submit the form" type="submit" name="submit" id="submit">Sign In</button><br><br>
     </p>
 </form>
 
