@@ -6,7 +6,7 @@
     </noscript>
     <meta charset="UTF-8">
     <title>Sign In</title>
-    <link rel="stylesheet" type="text/css" href="Stylesheets/form.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/formLog.css">
     <script>
         if(!navigator.cookieEnabled){
             document.write("<style>div { display:none; }</style>");
@@ -51,7 +51,10 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
         <input type="password" name="pass" id="pass" placeholder="********" style="text-align: center">
     </p><br>
 
-    <button type="submit" name="submit">Sign In</button><br><br>
+    <p>
+        <label for="submit"></label>
+    <button type="submit" name="submit" id="submit">Sign In</button><br><br>
+    </p>
 </form>
 
     New to AirFra Company? <a href="register.php">Sign Up!</a><br><br>

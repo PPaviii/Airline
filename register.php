@@ -6,7 +6,7 @@
     </noscript>
     <meta charset="UTF-8">
     <title>Sign Up</title>
-    <link rel="stylesheet" type="text/css" href="Stylesheets/form.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/formReg.css">
     <script type="text/javascript" src="register.js"></script>
     <script>
         if(!navigator.cookieEnabled){
@@ -59,8 +59,12 @@ session_write_close();
         <input type="password" name="pass2" id="pass2" placeholder="********" style="text-align: center">
     </p><br>
 
-    <button type="submit" name="submit">Sign Up</button><br><br>
+    <p>
+        <label for="submit"></label>
+    <button type="submit" id="submit "name="submit">Sign Up</button><br><br>
+    </p>
 </form>
+    <a href="index.php">Return to the seats map</a>
 
 </div>
 

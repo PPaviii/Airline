@@ -10,8 +10,10 @@ function check(){
         window.alert("The two passwords you inserted are different. Try again");
         document.getElementById("pass1").value = "";
         document.getElementById("pass1").style.borderColor = 'red';
+        document.getElementById("pass1").style.borderRadius = '4px';
         document.getElementById("pass2").value = "";
         document.getElementById("pass2").style.borderColor = 'red';
+        document.getElementById("pass2").style.borderRadius = '4px';
         return false;
     }
 

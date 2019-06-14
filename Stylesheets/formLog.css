@@ -1,0 +1,32 @@
+form  { display: table; margin: auto      }
+p     { display: table-row; margin: auto  }
+label { display: table-cell; margin: auto }
+input { display: table-cell; margin: auto; border: 2px solid lightgrey; border-radius: 3px; padding: 3% }
+
+h2 {
+    font-size: 180%;
+}
+
+button {
+    margin: 0 auto;
+    padding: 5%;
+    background-color: #f1f1f1;
+    border: transparent;
+    color: #000;
+    border-radius: 8px;
+}
+
+input:focus {
+    border: 2px solid #555;
+}
+
+button:hover {
+    background-color: #555;
+    color: white;
+    border-radius: 8px;
+}
+
+* {
+    font-family: sans-serif;
+    text-align: center;
+}
