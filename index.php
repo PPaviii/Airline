@@ -100,9 +100,9 @@ $occupied = (int) $rowOcc["Occ"];
 $free = $total - $reserved - $occupied;
 
 echo "<div id='info'>";
-echo "<p style='margin-top: 91%'>Number of available seats: " . $free . "</p>";
-echo "<p>Number of reserved seats: " . $reserved . "</p>";
-echo "<p>Number of occupied seats: " . $occupied . "</p>";
+echo "<p style='margin-top: 91%; color: limegreen'>Number of free seats: " . $free . "</p>";
+echo "<p style='color: orange'>Number of reserved seats: " . $reserved . "</p>";
+echo "<p style='color: red'>Number of occupied seats: " . $occupied . "</p>";
 echo "<p>Total number of seats: $total</p>";
 echo "</div>";
 

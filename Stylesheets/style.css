@@ -24,9 +24,9 @@ td {
     margin: auto
 }
 
-#nav {float: left; width: 20%; margin-top: 5%}
+#nav {float: left; width: 15%; margin-top: 5%}
 #map {float: left; width: 60%}
-#info {float: right; width: 20%; margin-top: 1%}
+#info {float: right; width: 25%; margin-top: 1%}
 
 ul {
     list-style-type: none;
@@ -34,7 +34,7 @@ ul {
     padding: 0;
     width: 200px;
     background-color: #f1f1f1;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 li a {
@@ -47,7 +47,7 @@ li a {
 li a:hover {
     background-color: #555;
     color: white;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 button {
@@ -56,12 +56,12 @@ button {
     background-color: #f1f1f1;
     border: transparent;
     color: #000;
-    border-radius: 10px;
+    border-radius: 8px;
 
 }
 
 button:hover {
     background-color: #555;
     color: white;
-    border-radius: 10px;
+    border-radius: 8px;
 }

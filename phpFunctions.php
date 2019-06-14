@@ -65,7 +65,7 @@ function printMapIndex(){
         echo"<tr>";
         for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
             $char = chr($x);
-            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.background)' onmouseout='normal(this.id)' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
             echo $i . chr($x) . "</td>";
         }
         echo "</tr>";
@@ -118,7 +118,7 @@ function printMapPersonalPage(){
         echo"<tr>";
         for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
             $char = chr($x);
-            echo "<td id='$i$char' onmouseover='darker(this.id)' onmouseout='normal(this.id)' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
             echo $i . chr($x) . "</td>";
         }
         echo "</tr>";
@@ -195,8 +195,6 @@ function updateColors(){
         }
     }
 
-    $reserved += $mine;
-
     while ($row = $resIdO->fetch_assoc()){
         $occupied += 1;
         $seatNcolors .= $row["Seat"] . " ";
@@ -204,7 +202,7 @@ function updateColors(){
     }
 
 
-    $free = ROWS * COLUMNS - $reserved - $occupied;
+    $free = ROWS * COLUMNS - $reserved - $occupied - $mine;
 
     $seatNcolors .= $mine . " "  . $reserved . " " . $occupied . " " . $free;
     echo $seatNcolors;

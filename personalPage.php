@@ -89,16 +89,16 @@ $free = $total - $reservedTot - $occupiedTot;
 
 echo "<div id='info'>";
 echo "<form action='index.php' method='post'>";
-echo "<p style='color:green'>Hi, " . $_SESSION["username"] . ".</p>";
+echo "<p style='color:green'>Hi, " . $_SESSION["username"] . "</p>";
 echo "<p style='color: green'>Now you are logged in and you can purchase airplane seats.</p>";
 echo "<input type=\"hidden\" value=\"1\" name=\"lout\">";
 echo "<button type=\"submit\" name=\"logout\">Log Out</button>";
 echo "</form><br>";
 
-echo "<p id='free' style='margin-top: 45%'>Number of available seats: " . $free . "</p>";
-echo "<p id='reserved'>Number of reserved seats: " . $reservedTot . "</p>";
-echo "<p id='reservedMe'>Number of seats you have reserved: " . $reservedTotMe . "</p>";
-echo "<p id='occupied'>Number of occupied seats: " . $occupiedTot . "</p>";
+echo "<p id='free' style='margin-top: 45%; color: limegreen'>Number of free seats: " . $free . "</p>";
+echo "<p id='reserved' style='color: orange;'>Number of seats others have reserved: " . ($reservedTot - $reservedTotMe) . "</p>";
+echo "<p id='reservedMe' style='color: yellow'>Number of seats you have reserved: " . $reservedTotMe . "</p>";
+echo "<p id='occupied' style='color: red'>Number of occupied seats: " . $occupiedTot . "</p>";
 echo "<p>Total number of seats: $total</p>";
 echo "</div>";
 
@@ -137,6 +137,9 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
 
 <script>
     function reserveSeat(id){
+
+        var seatColor = document.getElementById(id).style.backgroundColor;
+
         if (window.XMLHttpRequest) {
             // code for modern browsers
             xmlhttp = new XMLHttpRequest();
@@ -150,17 +153,25 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
 
                 switch (this.responseText) {
                     case "OK":
+
+                        if(seatColor === "yellow"){
+                            document.getElementById(id).style.background = "limegreen";
+                            break;
+                        }
+
                         window.alert("Reservation inserted successfully!");
 
-                        var free = document.getElementById("free").innerHTML;
-                        var valueF = parseInt(free.replace(/[^0-9\.]/g, ''), 10);
-                        valueF -= 1;
-                        document.getElementById("free").innerHTML = "Number of available seats: " + valueF;
-
-                        var reserved = document.getElementById("reserved").innerHTML;
-                        var valueR = parseInt(reserved.replace(/[^0-9\.]/g, ''), 10);
-                        valueR += 1;
-                        document.getElementById("reserved").innerHTML = "Number of reserved seats: " + valueR;
+                        if(seatColor === "orange"){
+                            var reserved = document.getElementById("reserved").innerHTML;
+                            var valueR = parseInt(reserved.replace(/[^0-9\.]/g, ''), 10);
+                            valueR -= 1;
+                            document.getElementById("reserved").innerHTML = "Number of seats others have reserved: " + valueR;
+                        }else {
+                            var free = document.getElementById("free").innerHTML;
+                            var valueF = parseInt(free.replace(/[^0-9\.]/g, ''), 10);
+                            valueF -= 1;
+                            document.getElementById("free").innerHTML = "Number of free seats: " + valueF;
+                        }
 
                         var reservedMe = document.getElementById("reservedMe").innerHTML;
                         var valueRMe = parseInt(reservedMe.replace(/[^0-9\.]/g, ''), 10);
@@ -185,12 +196,7 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         var free2 = document.getElementById("free").innerHTML;
                         var valueF2 = parseInt(free2.replace(/[^0-9\.]/g, ''), 10);
                         valueF2 += 1;
-                        document.getElementById("free").innerHTML = "Number of available seats: " + valueF2;
-
-                        var reserved2 = document.getElementById("reserved").innerHTML;
-                        var valueR2 = parseInt(reserved2.replace(/[^0-9\.]/g, ''), 10);
-                        valueR2 -= 1;
-                        document.getElementById("reserved").innerHTML = "Number of reserved seats: " + valueR2;
+                        document.getElementById("free").innerHTML = "Number of free seats: " + valueF2;
 
                         var reservedMe2 = document.getElementById("reservedMe").innerHTML;
                         var valueRMe2 = parseInt(reservedMe2.replace(/[^0-9\.]/g, ''), 10);
@@ -211,17 +217,7 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         var free3 = document.getElementById("free").innerHTML;
                         var valueF3 = parseInt(free3.replace(/[^0-9\.]/g, ''), 10);
                         valueF3 -= 1;
-                        document.getElementById("free").innerHTML = "Number of available seats: " + valueF3;
-
-                        var reserved3 = document.getElementById("reserved").innerHTML;
-                        var valueR3 = parseInt(reserved3.replace(/[^0-9\.]/g, ''), 10);
-                        valueR3 -= 1;
-                        document.getElementById("reserved").innerHTML = "Number of reserved seats: " + valueR3;
-
-                        var reservedMe3 = document.getElementById("reservedMe").innerHTML;
-                        var valueRMe3 = parseInt(reservedMe3.replace(/[^0-9\.]/g, ''), 10);
-                        valueRMe3 -= 1;
-                        document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + valueRMe3;
+                        document.getElementById("free").innerHTML = "Number of free seats: " + valueF3;
 
                         var occupied = document.getElementById("occupied").innerHTML;
                         var valueO = parseInt(occupied.replace(/[^0-9\.]/g, ''), 10);
@@ -279,8 +275,8 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         document.getElementById(colors[i]).style.background = colors[++i];
                     }
 
-                    document.getElementById("free").innerHTML = "Number of available seats: " + colors[colors.length - 1];
-                    document.getElementById("reserved").innerHTML = "Number of reserved seats: " + colors[colors.length - 3];
+                    document.getElementById("free").innerHTML = "Number of free seats: " + colors[colors.length - 1];
+                    document.getElementById("reserved").innerHTML = "Number of seats others have reserved: " + colors[colors.length - 3];
                     document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + colors[colors.length - 4];
                     document.getElementById("occupied").innerHTML = "Number of occupied seats: " + colors[colors.length - 2];
                 }
