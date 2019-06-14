@@ -62,8 +62,11 @@ if ($conn->connect_error) {
 
 echo "<div id='nav'>";
 echo "<ul>";
+echo "<li><a class='active' href='index.php'>Home Page</a></li>";
+echo "<li><a href='login.php' style='pointer-events: none; opacity: 0.2'>Sign In</a></li>";
+echo "<li><a href='register.php' style='pointer-events: none; opacity: 0.2'>Sign Up</a></li>";
 echo "<li><a onclick='updateMap()'>Update Seats</a></li>";
-echo "<li id='buy' style='opacity: 0.2'><a id='buyl' style='pointer-events: none' href='buyOk.php'>Buy!</a></li>";
+echo "<li id='buy' style='opacity: 0.2'><a id='buyl' style='pointer-events: none' href='buyOk.php'>Buy</a></li>";
 echo "</ul>";
 echo "</div>";
 

@@ -1,3 +1,43 @@
+#nav {float: left; width: 1%; margin-top: 1%}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #555;
+    color: white;
+    border-radius: 8px;
+}
+
+button {
+    margin: 0 auto;
+    padding: 3%;
+    background-color: #f1f1f1;
+    border: transparent;
+    color: #000;
+    border-radius: 8px;
+
+}
+
+button:hover {
+    background-color: #555;
+    color: white;
+    border-radius: 8px;
+}
+
 form  { display: table; margin: auto      }
 p     { display: table-row; margin: auto  }
 label { display: table-cell; margin: auto }
@@ -29,4 +69,10 @@ button:hover {
 * {
     font-family: sans-serif;
     text-align: center;
+}
+
+.active {
+    background-color: #555;
+    color: white;
+    border-radius: 8px;
 }

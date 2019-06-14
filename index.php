@@ -78,8 +78,11 @@ if ($conn->connect_error) {
 
 echo "<div id='nav'>";
 echo "<ul>";
+echo "<li><a class='active' href='index.php'>Home Page</a></li>";
 echo "<li><a href='login.php'>Sign In</a></li>";
 echo "<li><a href='register.php'>Sign Up</a></li>";
+echo "<li><a style='opacity: 0.2; pointer-events: none'>Update Seats</a></li>";
+echo "<li><a style='opacity: 0.2; pointer-events: none'>Buy</a></li>";
 echo "</ul>";
 echo "</div>";
 

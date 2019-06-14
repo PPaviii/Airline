@@ -39,8 +39,17 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 }
 
 ?>
+    <div id='nav'>
+        <ul>
+            <li><a href='index.php'>Home Page</a></li>
+            <li><a class="active" href='login.php' style='pointer-events: none'>Sign In</a></li>
+            <li><a href='register.php'>Sign Up</a></li>
+            <li style='pointer-events: none; opacity: 0.2'><a onclick='updateMap()'>Update Seats</a></li>
+            <li id='buy' style='opacity: 0.2'><a id='buyl' style='pointer-events: none' href='buyOk.php'>Buy</a></li>
+        </ul>
+    </div>
 
-<form id="login" action='loginOk.php' method='post'>
+<br><form id="login" action='loginOk.php' method='post'>
     <p>
         <label for="user">E-mail:</label>
         <input type="email" name="user" id="name" placeholder="john@doe.us" style="text-align: center">
@@ -52,14 +61,11 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     </p><br>
 
     <p>
-        <label for="submit"></label>
+        <label></label>
     <button type="submit" name="submit" id="submit">Sign In</button><br><br>
     </p>
 </form>
 
-    New to AirFra Company? <a href="register.php">Sign Up!</a><br><br>
-
-    <a href="index.php">Return to the seats map</a>
 <?php
 
 if (isset($_SESSION["error"]) && $_SESSION["error"] == 1) {
