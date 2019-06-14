@@ -65,7 +65,7 @@ function printMapIndex(){
         echo"<tr>";
         for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
             $char = chr($x);
-            echo "<td id='$i$char' onmouseover='darker(this.id)' onmouseout='normal(this.id)' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.background)' onmouseout='normal(this.id)' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
             echo $i . chr($x) . "</td>";
         }
         echo "</tr>";
@@ -178,22 +178,35 @@ function updateColors(){
     $seatNcolors = "";
     $seatNcolors .= ROWS . " " . COLUMNS . " ";
 
+    $mine = 0;
+    $reserved = 0;
+    $occupied = 0;
+
     while ($row = $resIdR->fetch_assoc()){
 
         if($_SESSION["username"] == $row["Username"]){
+            $mine += 1;
             $seatNcolors .= $row["Seat"] . " ";
             $seatNcolors .= "yellow ";
         }else {
+            $reserved += 1;
             $seatNcolors .= $row["Seat"] . " ";
             $seatNcolors .= "orange ";
         }
     }
 
+    $reserved += $mine;
+
     while ($row = $resIdO->fetch_assoc()){
+        $occupied += 1;
         $seatNcolors .= $row["Seat"] . " ";
         $seatNcolors .= "red ";
     }
 
+
+    $free = ROWS * COLUMNS - $reserved - $occupied;
+
+    $seatNcolors .= $mine . " "  . $reserved . " " . $occupied . " " . $free;
     echo $seatNcolors;
 }
 

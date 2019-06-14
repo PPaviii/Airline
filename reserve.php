@@ -32,7 +32,9 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $check = "SELECT Username, Status FROM Seat WHERE Seat = '" . $id . "'";
+    mysqli_autocommit($conn, false);
+
+    $check = "SELECT Username, Status FROM Seat WHERE Seat = '" . $id . "' FOR UPDATE";
     $resCheck = $conn->query($check);
 
     $result = $resCheck->fetch_assoc();
@@ -46,6 +48,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
 
             $delete = "DELETE FROM Seat WHERE Seat = '" . $id . "'";
             $conn->query($delete);
+            mysqli_commit($conn);
             $conn->close();
 
             echo "UNDO";
@@ -54,6 +57,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
             if($result["Status"] == 0){ //I steal the reservation
                 $update = "UPDATE Seat SET Username = '" . $_SESSION["username"] . "' WHERE Seat = '" . $id . "'";
                 $conn->query($update);
+                mysqli_commit($conn);
                 $conn->close();
 
                 $tmp = $_SESSION["myReserved"];
@@ -78,6 +82,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
     $_SESSION["myReserved"] = $tmp;
 
     $conn->query($insert);
+    mysqli_commit($conn);
     $conn->close();
 
     echo "OK";

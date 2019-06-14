@@ -1,10 +1,9 @@
-function darker(x) {
-    var color = document.getElementById(x).style.backgroundColor;
+function darker(id, color) {
     if(color !== "red") {
-        document.getElementById(x).style.border = "3px solid yellow";
+        document.getElementById(id).style.border = "1px solid yellow";
     }
 }
 
-function normal(x) {
-    document.getElementById(x).style.border = "1px solid black";
+function normal(id) {
+        document.getElementById(id).style.border = "1px solid black";
 }

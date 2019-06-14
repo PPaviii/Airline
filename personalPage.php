@@ -265,6 +265,7 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                     window.alert('Session expired. Log in and try again.');
                     window.location.href = 'login.php';
                 }else {
+
                     var colors = this.responseText.split(" ");
                     var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -274,10 +275,14 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         }
                     }
 
-                    for(var i = 2; i < colors.length -1; i++){
+                    for(var i = 2; i <= colors.length - 5; i++){
                         document.getElementById(colors[i]).style.background = colors[++i];
                     }
 
+                    document.getElementById("free").innerHTML = "Number of available seats: " + colors[colors.length - 1];
+                    document.getElementById("reserved").innerHTML = "Number of reserved seats: " + colors[colors.length - 3];
+                    document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + colors[colors.length - 4];
+                    document.getElementById("occupied").innerHTML = "Number of occupied seats: " + colors[colors.length - 2];
                 }
             }
         };
