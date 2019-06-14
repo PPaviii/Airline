@@ -55,6 +55,14 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
             return;
         }else{
             if($result["Status"] == 0){ //I steal the reservation
+
+                if($_POST["color"] === "yellow"){ //undo in case of two users reserve the same seat and then the first one deletes his reservation
+                    mysqli_commit($conn);
+                    $conn->close();
+                    echo "OK";
+                    return;
+                }
+
                 $update = "UPDATE Seat SET Username = '" . $_SESSION["username"] . "' WHERE Seat = '" . $id . "'";
                 $conn->query($update);
                 mysqli_commit($conn);

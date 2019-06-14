@@ -27,8 +27,8 @@ td {
     margin: auto
 }
 
-#nav {float: left; width: 15%; margin-top: 5%}
-#map {float: left; width: 60%}
+#nav {float: left; width: 25%; margin-top: 5%}
+#map {float: left; width: 50%}
 #info {float: right; width: 25%; margin-top: 1%}
 
 ul {

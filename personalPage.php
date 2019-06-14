@@ -245,7 +245,7 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
 
         xmlhttp.open("POST", "reserve.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("seatId=" + id);
+        xmlhttp.send("seatId=" + id + "&color=" + seatColor);
     }
     
     function updateMap() {
