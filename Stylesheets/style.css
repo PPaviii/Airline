@@ -1,9 +1,10 @@
 * {
     font-family: sans-serif;
+    font-size: 100%;
 }
 
 h2 {
-    font-size: 180%;
+    font-size: 200%;
     text-align: center;
 }
 
@@ -15,10 +16,12 @@ table {
     margin: auto;
     width: 20%;
     border: 1px solid #555;
+    border-radius: 5px;
 }
 
 td {
     border: 1px solid black;
+    border-radius: 5px;
     text-align: center;
     padding: auto;
     margin: auto
@@ -35,7 +38,7 @@ ul {
     padding: 0;
     width: 200px;
     background-color: #f1f1f1;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 li a {
@@ -49,7 +52,7 @@ li a {
 li a:hover {
     background-color: #555;
     color: white;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 button {
@@ -58,18 +61,18 @@ button {
     background-color: #f1f1f1;
     border: transparent;
     color: #000;
-    border-radius: 8px;
+    border-radius: 5px;
 
 }
 
 button:hover {
     background-color: #555;
     color: white;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 .active {
     background-color: #555;
     color: white;
-    border-radius: 8px;
+    border-radius: 5px;
 }
