@@ -57,7 +57,7 @@ $password = "chalingt";
 $conn = new mysqli($servername, $username, $password, "s264970");
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("<br><br><p>An unexpected problem has occurred with the database connection. Please try again.</p>");
 }
 
 echo "<div id='nav'>";
@@ -85,6 +85,14 @@ $rowRes = $resRes->fetch_assoc();
 $rowResMe = $resResMe->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
+if(!$resRes || !$resResMe || !$resOcc){
+    die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+}
+
+if($rowRes == NULL || $rowResMe == NULL || $rowOcc == NULL){
+    die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+}
+
 $reservedTotMe = (int) $rowResMe["ReservedMe"];
 $reservedTot = (int) $rowRes["Reserved"];
 $occupiedTot = (int) $rowOcc["Occ"];
@@ -110,6 +118,10 @@ session_write_close();
 $anyMine = "SELECT COUNT(*) AS Mine FROM Seat WHERE Status = 0 AND Username = '" . $_SESSION["username"] . "'";
 $resMine = $conn->query($anyMine);
 $rowMine = $resMine->fetch_assoc();
+
+if(!$resMine || $rowMine == NULL){
+    die("<br><br><p>There was an error in a query which collects statistics about your seats. Please try again.</p>");
+}
 
 $mine = (int) $rowMine["Mine"];
 

@@ -73,7 +73,7 @@ $password = "chalingt";
 $conn = new mysqli($servername, $username, $password, "s264970");
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("<br><br><p>An unexpected problem has occurred with the database connection. Please try again.</p>");
 }
 
 echo "<div id='nav'>";
@@ -97,6 +97,14 @@ $resOcc = $conn->query($occupied);
 
 $rowRes = $resRes->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
+
+if(!$resRes || !$resOcc){
+    die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+}
+
+if($rowRes == NULL || $rowOcc == NULL){
+    die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+}
 
 $reserved = (int) $rowRes["Reserved"];
 $occupied = (int) $rowOcc["Occ"];

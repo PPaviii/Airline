@@ -43,7 +43,7 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
         $conn = new mysqli($servername, $username, $password, "s264970");
 
         if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+            die("<br><br><p>An unexpected problem has occurred with the database connection. Please try again.</p>");
         }
 
         $user = strip_tags($_POST["user"]);
@@ -58,11 +58,29 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
         }
 
         $login = $conn->prepare("SELECT Password FROM User WHERE Username = ?");
-        $login->bind_param("s", $user);
-        $login->execute();
-        $login->store_result();
+
+        if(!$login){
+            die("<br><br><p>An unexpected problem has occurred with the prepare statement. Please try again.</p>");
+        }
+
+        if(!$login->bind_param("s", $user)){
+            die("<br><br><p>An unexpected problem has occurred with the bind_param statement. Please try again.</p>");
+        }
+
+        if(!$login->execute()){
+            die("<br><br><p>An unexpected problem has occurred with the execute statement. Please try again.</p>");
+        }
+
+        if(!$login->store_result()){
+            die("<br><br><p>An unexpected problem has occurred with the store_result. Please try again.</p>");
+        }
+
         $rows = $login->num_rows;
-        $login->bind_result($password);
+
+        if(!$login->bind_result($password)){
+            die("<br><br><p>An unexpected problem has occurred with the bind_result statement. Please try again.</p>");
+        }
+
         $login->fetch();
 
         if ($rows === 1){
@@ -107,8 +125,10 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
     }
 
 }else {
-    echo "<h2>You are already logged in</h2>";
-    echo "<a href='index.php'>Return to the Home page</a>";
+    echo "<script type='text/javascript'>";
+    echo "window.alert('You are already logged in.');";
+    echo "window.location.href = 'personalPage.php';";
+    echo "</script>";
 }
 
 ?>

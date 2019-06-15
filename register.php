@@ -34,8 +34,10 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 $_SESSION["active_time"] = time();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
-    echo "<p>You are already registered and logged in.</p><br>";
-    echo "<a href='personalPage.php'>Return to the Personal Home page</a>";
+    echo "<script type='text/javascript'>";
+    echo "window.alert('You are already registered and logged in.');";
+    echo "window.location.href = 'personalPage.php';";
+    echo "</script>";
     return;
 }
 

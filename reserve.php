@@ -29,13 +29,17 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
     $conn = new mysqli($servername, $username, $password, "s264970");
 
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        die("<br><br><p>An unexpected problem has occurred with the database connection. Please try again.</p>");
     }
 
     mysqli_autocommit($conn, false);
 
     $check = "SELECT Username, Status FROM Seat WHERE Seat = '" . $id . "' FOR UPDATE";
     $resCheck = $conn->query($check);
+
+    if(!$resCheck){
+        die("<br><br><p>There was an error in a query which checks seat availability. Please try again.</p>");
+    }
 
     $result = $resCheck->fetch_assoc();
 
@@ -47,7 +51,11 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
             $_SESSION["myReserved"] = $tmp;
 
             $delete = "DELETE FROM Seat WHERE Seat = '" . $id . "'";
-            $conn->query($delete);
+
+            if(!$conn->query($delete)){
+                die("<br><br><p>There was an error updating the databse. No changes were done. Please try again.</p>");
+            }
+
             mysqli_commit($conn);
             $conn->close();
 
@@ -64,7 +72,11 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
                 }
 
                 $update = "UPDATE Seat SET Username = '" . $_SESSION["username"] . "' WHERE Seat = '" . $id . "'";
-                $conn->query($update);
+
+                if(!$conn->query($update)){
+                    die("<br><br><p>There was an error updating the databse. No changes were done. Please try again.</p>");
+                }
+
                 mysqli_commit($conn);
                 $conn->close();
 
@@ -89,7 +101,10 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
     $tmp += 1;
     $_SESSION["myReserved"] = $tmp;
 
-    $conn->query($insert);
+    if(!$conn->query($insert)){
+        die("<br><br><p>There was an error updating the databse. No changes were done. Please try again.</p>");
+    }
+
     mysqli_commit($conn);
     $conn->close();
 

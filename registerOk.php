@@ -39,9 +39,10 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
         $pass = htmlentities($pass);
 
         if ($user !== $_POST["user"] || $pass !== $_POST["pass1"]) {
-            echo "<h2>A problem has occurred with your input values. You registration is not valid.</h2>";
-            echo "<p>No change to the database were done.</p>";
-            echo "<a href='register.php'>Return to the register page</a>";
+            echo "<script type='text/javascript'>";
+            echo "window.alert('There was an error with your input values. Please try again.');";
+            echo "window.location.href = 'personalPage.php';";
+            echo "</script>";
             return;
         }
 
@@ -68,13 +69,20 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
         $conn = new mysqli($servername, $username, $password, "s264970");
 
         if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+            die("<br><br><p>An unexpected problem has occurred with the database connection. Please try again.</p>");
         }
 
         $passwordH = password_hash($pass, PASSWORD_DEFAULT);
 
         $insert = $conn->prepare("INSERT INTO User (Username, Password) VALUES (?, ?)");
-        $insert->bind_param("ss", $user, $passwordH);
+
+        if(!$insert){
+            die("<br><br><p>An unexpected problem has occurred with the prepare statement. Please try again.</p>");
+        }
+
+        if(!$insert->bind_param("ss", $user, $passwordH)){
+            die("<br><br><p>An unexpected problem has occurred with the bind_param statement. Please try again.</p>");
+        }
 
         if ($insert->execute() === TRUE) {
 
@@ -92,9 +100,11 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
             echo "window.location.replace('personalPage.php');";
             echo "</script>";
         } else if ($insert->errno === 1062) {
-            session_write_close();
             $insert->close();
             $conn->close();
+
+            $_SESSION["error"] = 0;
+            session_write_close();
 
             echo "<script type='text/javascript'>";
             echo "window.alert('The username you inserted already exists. Please Log In.');";
@@ -117,8 +127,10 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
     }
 
 }else{
-    echo "<h2>You are already registered and logged in</h2>";
-    echo "<a href='index.php'>Return to the Home page</a>";
+    echo "<script type='text/javascript'>";
+    echo "window.alert('You are already registered and logged in.');";
+    echo "window.location.href = 'personalPage.php';";
+    echo "</script>";
 }
 
 ?>

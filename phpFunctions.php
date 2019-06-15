@@ -51,7 +51,7 @@ function printMapIndex(){
     $conn = new mysqli($servername, $username, $password, "s264970");
 
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        die("<br><br><p>An unexpected problem has occurred with the database connection. Please try again.</p>");
     }
 
     echo "<div id='map'>";
@@ -79,13 +79,27 @@ function printMapIndex(){
     $resIdR = $conn->query($idReserved);
     $resIdO = $conn->query($idOccupied);
 
+    if(!$resIdR || !$resIdO){
+        die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+    }
+
     while ($row = $resIdR->fetch_assoc()){
+
+        if($row == NULL){
+            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+        }
+
         echo "<script type='text/javascript'>";
         echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
         echo "</script>";
     }
 
     while ($row = $resIdO->fetch_assoc()){
+
+        if($row == NULL){
+            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+        }
+
         echo "<script type='text/javascript'>";
         echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
         echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
@@ -104,7 +118,7 @@ function printMapPersonalPage(){
     $conn = new mysqli($servername, $username, $password, "s264970");
 
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        die("<br><br><p>An unexpected problem has occurred with the database connection. Please try again.</p>");
     }
 
     echo "<div id='map'>";
@@ -132,7 +146,15 @@ function printMapPersonalPage(){
     $resIdR = $conn->query($idReserved);
     $resIdO = $conn->query($idOccupied);
 
+    if(!$resIdR || !$resIdO){
+        die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+    }
+
     while ($row = $resIdR->fetch_assoc()){
+
+        if($row == NULL){
+            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+        }
 
         if($_SESSION["username"] == $row["Username"]){
             $tmp = $_SESSION["myReserved"];
@@ -149,6 +171,11 @@ function printMapPersonalPage(){
     }
 
     while ($row = $resIdO->fetch_assoc()){
+
+        if($row == NULL){
+            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+        }
+
         echo "<script type='text/javascript'>";
         echo "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"red\";";
         echo "document.getElementById(\"" . $row["Seat"] . "\").onclick = \"null\";";
@@ -166,7 +193,7 @@ function updateColors(){
     $conn = new mysqli($servername, $username, $password, "s264970");
 
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        die("<br><br><p>An unexpected problem has occurred with the database connection. Please try again.</p>");
     }
 
     $idReserved = "SELECT Username, Seat FROM Seat WHERE Status = 0"; //id of all reserved seats
@@ -174,6 +201,10 @@ function updateColors(){
 
     $resIdR = $conn->query($idReserved);
     $resIdO = $conn->query($idOccupied);
+
+    if(!$resIdR || !$resIdO){
+        die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+    }
 
     $seatNcolors = "";
     $seatNcolors .= ROWS . " " . COLUMNS . " ";
@@ -183,6 +214,10 @@ function updateColors(){
     $occupied = 0;
 
     while ($row = $resIdR->fetch_assoc()){
+
+        if($row == NULL){
+            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+        }
 
         if($_SESSION["username"] == $row["Username"]){
             $mine += 1;
@@ -196,6 +231,11 @@ function updateColors(){
     }
 
     while ($row = $resIdO->fetch_assoc()){
+
+        if($row == NULL){
+            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+        }
+
         $occupied += 1;
         $seatNcolors .= $row["Seat"] . " ";
         $seatNcolors .= "red ";
