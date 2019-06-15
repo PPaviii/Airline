@@ -84,9 +84,9 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 
         header("HTTP/1.1 303 See Other");
         header("Location: personalPage.php");
-    }else{ //someone stole at least one seat, I free all my seats
+    }else{ //someone stole at least one seat, I free all my reserved seats
 
-        $delete = "DELETE FROM Seat WHERE Username = '" . $_SESSION["username"] . "'";
+        $delete = "DELETE FROM Seat WHERE Status = 0 AND Username = '" . $_SESSION["username"] . "'";
 
         if(!$conn->query($delete)){
             die("<br><br><p>There was an error updating the databse. No changes were done. Please try again.</p>");
