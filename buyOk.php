@@ -79,7 +79,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     $reservedMine = (int) $rowRes["Reserved"];
 
     if($myReserved === $reservedMine){ //I purchase all my seats
-        $update = "UPDATE Set SET Status = 1 WHERE Username = '" . $_SESSION["username"] . "'";
+        $update = "UPDATE Seat SET Status = 1 WHERE Username = '" . $_SESSION["username"] . "'";
 
         if(!$conn->query($update)){
             echo "<script type='text/javascript'>";

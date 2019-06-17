@@ -47,7 +47,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
             <li><a class="active" href='login.php' style='pointer-events: none'>Sign In</a></li>
             <li><a href='register.php'>Sign Up</a></li>
             <li><a style='opacity: 0.2; pointer-events: none' href='logout.php'>Log Out</a></li>
-            <li style='pointer-events: none; opacity: 0.2'><a onclick='updateMap()'>Update Seats</a></li>
+            <li style='pointer-events: none; opacity: 0.2'><a onclick='updateMap()'>Update</a></li>
             <li id='buy' style='opacity: 0.2'><a id='buyl' style='pointer-events: none' href='buyOk.php'>Buy</a></li>
         </ul>
     </div>
@@ -73,10 +73,12 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 
 if (isset($_SESSION["error"]) && $_SESSION["error"] == 1) {
     echo "<br><br><p style='color: red'>Error: wrong username or password. Retry.</p><br>";
+    $_SESSION["error"] = 0;
 }
 
 if (isset($_SESSION["notPresent"]) && $_SESSION["notPresent"] == 1) {
     echo "<br><br><p style='color: red'>Error: your username is not present in the database. Please Sign Up.</p><br>";
+    $_SESSION["notPresent"] = 0;
 }
 
 ?>

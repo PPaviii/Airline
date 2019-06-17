@@ -51,7 +51,7 @@ session_write_close();
             <li><a href='login.php'>Sign In</a></li>
             <li><a class="active" href='register.php' style='pointer-events: none;'>Sign Up</a></li>
             <li><a style='opacity: 0.2; pointer-events: none' href='logout.php'>Log Out</a></li>
-            <li style='pointer-events: none; opacity: 0.2'><a onclick='updateMap()'>Update Seats</a></li>
+            <li style='pointer-events: none; opacity: 0.2'><a onclick='updateMap()'>Update</a></li>
             <li id='buy' style='opacity: 0.2'><a id='buyl' style='pointer-events: none' href='buyOk.php'>Buy</a></li>
         </ul>
     </div>

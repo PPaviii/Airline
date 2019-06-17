@@ -132,6 +132,7 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
                 exit();
             }
         }else{
+            $_SESSION["error"] = 0;
             $_SESSION["notPresent"] = 1;
 
             session_write_close();
