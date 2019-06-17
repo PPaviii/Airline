@@ -1,6 +1,7 @@
 <?php
 
 require_once "phpFunctions.php";
+require_once "Global.php";
 enforceSSL();
 
 start_secure_session();
@@ -22,6 +23,25 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
         return;
     }
 
+    if(!preg_match('/^\d+[A-Z]$/', $id)){
+        echo "InputError";
+        return;
+    }else{
+        $num = intval(preg_replace('/[^0-9]+/', '', $id), 10);
+        if($num >= 1 && $num <= ROWS){
+            $char = strval(preg_replace('/[0-9]+/', '', $id));
+            if(ord($char) >= ord("A") && ord($char) < (ord('A') + COLUMNS)){
+                //do nothing
+            }else{
+                echo "InputError";
+                return;
+            }
+        }else{
+            echo "InputError";
+            return;
+        }
+    }
+
     $servername = "localhost";
     $username = "s264970";
     $password = "chalingt";
@@ -38,7 +58,11 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
     $resCheck = $conn->query($check);
 
     if(!$resCheck){
-        die("<br><br><p>There was an error in a query which checks seat availability. Please try again.</p>");
+        echo "<script type='text/javascript'>";
+        echo "window.alert('There was an error in a query which checks seat availability. Please try again.');";
+        echo "window.location.href = 'personalPage.php';";
+        echo "</script>";
+        return;
     }
 
     $result = $resCheck->fetch_assoc();
@@ -53,7 +77,11 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
             $delete = "DELETE FROM Seat WHERE Seat = '" . $id . "'";
 
             if(!$conn->query($delete)){
-                die("<br><br><p>There was an error updating the databse. No changes were done. Please try again.</p>");
+                echo "<script type='text/javascript'>";
+                echo "window.alert('There was an error updating the database. No changes were done. Please try again.');";
+                echo "window.location.href = 'personalPage.php';";
+                echo "</script>";
+                return;
             }
 
             mysqli_commit($conn);
@@ -74,7 +102,11 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
                 $update = "UPDATE Seat SET Username = '" . $_SESSION["username"] . "' WHERE Seat = '" . $id . "'";
 
                 if(!$conn->query($update)){
-                    die("<br><br><p>There was an error updating the databse. No changes were done. Please try again.</p>");
+                    echo "<script type='text/javascript'>";
+                    echo "window.alert('There was an error updating the database. No changes were done. Please try again.');";
+                    echo "window.location.href = 'personalPage.php';";
+                    echo "</script>";
+                    return;
                 }
 
                 mysqli_commit($conn);
@@ -102,7 +134,11 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
     $_SESSION["myReserved"] = $tmp;
 
     if(!$conn->query($insert)){
-        die("<br><br><p>There was an error updating the databse. No changes were done. Please try again.</p>");
+        echo "<script type='text/javascript'>";
+        echo "window.alert('There was an error updating the database. No changes were done. Please try again.');";
+        echo "window.location.href = 'personalPage.php';";
+        echo "</script>";
+        return;
     }
 
     mysqli_commit($conn);

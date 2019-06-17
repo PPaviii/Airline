@@ -46,6 +46,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
             <li><a href='index.php'>Home Page</a></li>
             <li><a class="active" href='login.php' style='pointer-events: none'>Sign In</a></li>
             <li><a href='register.php'>Sign Up</a></li>
+            <li><a style='opacity: 0.2; pointer-events: none' href='logout.php'>Log Out</a></li>
             <li style='pointer-events: none; opacity: 0.2'><a onclick='updateMap()'>Update Seats</a></li>
             <li id='buy' style='opacity: 0.2'><a id='buyl' style='pointer-events: none' href='buyOk.php'>Buy</a></li>
         </ul>

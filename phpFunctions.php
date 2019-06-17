@@ -80,13 +80,21 @@ function printMapIndex(){
     $resIdO = $conn->query($idOccupied);
 
     if(!$resIdR || !$resIdO){
-        die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+        echo "<script type='text/javascript'>";
+        echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
+        echo "window.location.href = 'index.php';";
+        echo "</script>";
+        return;
     }
 
     while ($row = $resIdR->fetch_assoc()){
 
         if($row == NULL){
-            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
+            echo "window.location.href = 'index.php';";
+            echo "</script>";
+            return;
         }
 
         echo "<script type='text/javascript'>";
@@ -97,7 +105,11 @@ function printMapIndex(){
     while ($row = $resIdO->fetch_assoc()){
 
         if($row == NULL){
-            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
+            echo "window.location.href = 'index.php';";
+            echo "</script>";
+            return;
         }
 
         echo "<script type='text/javascript'>";
@@ -147,13 +159,21 @@ function printMapPersonalPage(){
     $resIdO = $conn->query($idOccupied);
 
     if(!$resIdR || !$resIdO){
-        die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+        echo "<script type='text/javascript'>";
+        echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
+        echo "window.location.href = 'personalPage.php';";
+        echo "</script>";
+        return;
     }
 
     while ($row = $resIdR->fetch_assoc()){
 
         if($row == NULL){
-            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
+            echo "window.location.href = 'personalPage.php';";
+            echo "</script>";
+            return;
         }
 
         if($_SESSION["username"] == $row["Username"]){
@@ -173,7 +193,11 @@ function printMapPersonalPage(){
     while ($row = $resIdO->fetch_assoc()){
 
         if($row == NULL){
-            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
+            echo "window.location.href = 'personalPage.php';";
+            echo "</script>";
+            return;
         }
 
         echo "<script type='text/javascript'>";
@@ -203,7 +227,11 @@ function updateColors(){
     $resIdO = $conn->query($idOccupied);
 
     if(!$resIdR || !$resIdO){
-        die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+        echo "<script type='text/javascript'>";
+        echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
+        echo "window.location.href = 'personalPage.php';";
+        echo "</script>";
+        return;
     }
 
     $seatNcolors = "";
@@ -216,7 +244,11 @@ function updateColors(){
     while ($row = $resIdR->fetch_assoc()){
 
         if($row == NULL){
-            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
+            echo "window.location.href = 'personalPage.php';";
+            echo "</script>";
+            return;
         }
 
         if($_SESSION["username"] == $row["Username"]){
@@ -233,7 +265,11 @@ function updateColors(){
     while ($row = $resIdO->fetch_assoc()){
 
         if($row == NULL){
-            die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
+            echo "window.location.href = 'personalPage.php';";
+            echo "</script>";
+            return;
         }
 
         $occupied += 1;

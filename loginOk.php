@@ -60,25 +60,45 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
         $login = $conn->prepare("SELECT Password FROM User WHERE Username = ?");
 
         if(!$login){
-            die("<br><br><p>An unexpected problem has occurred with the prepare statement. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('An unexpected problem has occurred with the prepare statement. Please try again.');";
+            echo "window.location.href = 'login.php';";
+            echo "</script>";
+            return;
         }
 
         if(!$login->bind_param("s", $user)){
-            die("<br><br><p>An unexpected problem has occurred with the bind_param statement. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('An unexpected problem has occurred with the bind_param statement. Please try again.');";
+            echo "window.location.href = 'login.php';";
+            echo "</script>";
+            return;
         }
 
         if(!$login->execute()){
-            die("<br><br><p>An unexpected problem has occurred with the execute statement. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('An unexpected problem has occurred with the execute statement. Please try again.');";
+            echo "window.location.href = 'login.php';";
+            echo "</script>";
+            return;
         }
 
         if(!$login->store_result()){
-            die("<br><br><p>An unexpected problem has occurred with the store_result. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('An unexpected problem has occurred with the store_result statement. Please try again.');";
+            echo "window.location.href = 'login.php';";
+            echo "</script>";
+            return;
         }
 
         $rows = $login->num_rows;
 
         if(!$login->bind_result($password)){
-            die("<br><br><p>An unexpected problem has occurred with the bind_result statement. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('An unexpected problem has occurred with the bind_result statement. Please try again.');";
+            echo "window.location.href = 'login.php';";
+            echo "</script>";
+            return;
         }
 
         $login->fetch();

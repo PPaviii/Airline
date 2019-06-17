@@ -41,7 +41,7 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
         if ($user !== $_POST["user"] || $pass !== $_POST["pass1"]) {
             echo "<script type='text/javascript'>";
             echo "window.alert('There was an error with your input values. Please try again.');";
-            echo "window.location.href = 'personalPage.php';";
+            echo "window.location.href = 'register.php';";
             echo "</script>";
             return;
         }
@@ -77,11 +77,19 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
         $insert = $conn->prepare("INSERT INTO User (Username, Password) VALUES (?, ?)");
 
         if(!$insert){
-            die("<br><br><p>An unexpected problem has occurred with the prepare statement. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('An unexpected problem has occurred with the prepare statement. Please try again.');";
+            echo "window.location.href = 'register.php';";
+            echo "</script>";
+            return;
         }
 
         if(!$insert->bind_param("ss", $user, $passwordH)){
-            die("<br><br><p>An unexpected problem has occurred with the bind_param statement. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('An unexpected problem has occurred with the bind_param statement. Please try again.');";
+            echo "window.location.href = 'register.php';";
+            echo "</script>";
+            return;
         }
 
         if ($insert->execute() === TRUE) {

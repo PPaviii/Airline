@@ -65,6 +65,7 @@ echo "<ul>";
 echo "<li><a class='active' href='index.php'>Home Page</a></li>";
 echo "<li><a href='login.php' style='pointer-events: none; opacity: 0.2'>Sign In</a></li>";
 echo "<li><a href='register.php' style='pointer-events: none; opacity: 0.2'>Sign Up</a></li>";
+echo "<li><a href='logout.php'>Log Out</a></li>";
 echo "<li><a title='Refresh the seats map completely' onclick='updateMap()'>Update Seats</a></li>";
 echo "<li id='buy' style='opacity: 0.2'><a id='buyl' style='pointer-events: none' href='buyOk.php'>Buy</a></li>";
 echo "</ul>";
@@ -86,11 +87,19 @@ $rowResMe = $resResMe->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
 if(!$resRes || !$resResMe || !$resOcc){
-    die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+    echo "<script type='text/javascript'>";
+    echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
+    echo "window.location.href = 'personalPage.php';";
+    echo "</script>";
+    return;
 }
 
 if($rowRes == NULL || $rowResMe == NULL || $rowOcc == NULL){
-    die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+    echo "<script type='text/javascript'>";
+    echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
+    echo "window.location.href = 'personalPage.php';";
+    echo "</script>";
+    return;
 }
 
 $reservedTotMe = (int) $rowResMe["ReservedMe"];
@@ -99,12 +108,8 @@ $occupiedTot = (int) $rowOcc["Occ"];
 $free = $total - $reservedTot - $occupiedTot;
 
 echo "<div id='info'>";
-echo "<form action='index.php' method='post'>";
 echo "<p style='color:green'>Hi, " . $_SESSION["username"] . "</p>";
 echo "<p style='color: green'>Now you are logged in and you can purchase airplane seats. <br> To reserve a seat just click the one you prefer.</p>";
-echo "<input type=\"hidden\" value=\"1\" name=\"lout\">";
-echo "<button title='Exit from your personal account' type=\"submit\" name=\"logout\">Log Out</button>";
-echo "</form><br>";
 
 echo "<p id='free' style='margin-top: 45%; color: limegreen'>Number of free seats: " . $free . "</p>";
 echo "<p id='reserved' style='color: orange;'>Number of seats others have reserved: " . ($reservedTot - $reservedTotMe) . "</p>";
@@ -120,7 +125,11 @@ $resMine = $conn->query($anyMine);
 $rowMine = $resMine->fetch_assoc();
 
 if(!$resMine || $rowMine == NULL){
-    die("<br><br><p>There was an error in a query which collects statistics about your seats. Please try again.</p>");
+    echo "<script type='text/javascript'>";
+    echo "window.alert('There was an error in a query which collects statistics about your seats. Please try again.');";
+    echo "window.location.href = 'personalPage.php';";
+    echo "</script>";
+    return;
 }
 
 $mine = (int) $rowMine["Mine"];
@@ -165,6 +174,8 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
 
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+
+                //window.alert(this.responseText);
 
                 switch (this.responseText) {
                     case "OK":

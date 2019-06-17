@@ -41,20 +41,10 @@ $_SESSION["notok"] = 0;
 
 if(!isset($_SESSION["logged"])){
     $_SESSION["logged"] = 0;
-}elseif($_SESSION["logged"] == 1 && !isset($_POST["lout"])){
+}elseif($_SESSION["logged"] == 1){
     header("HTTP/1.1 303 See Other");
     header("Location: personalPage.php");
     session_write_close();
-    exit();
-}
-
-if(isset($_POST["lout"]) && $_POST["lout"] == 1){
-    $_SESSION["logged"] = 0;
-    $_SESSION["error"] = 0;
-    $_SESSION["notPresent"] = 0;
-    destroy_secure_session();
-    header("HTTP/1.1 303 See Other");
-    header("Location: index.php");
     exit();
 }
 
@@ -81,6 +71,7 @@ echo "<ul>";
 echo "<li><a class='active' href='index.php'>Home Page</a></li>";
 echo "<li><a href='login.php'>Sign In</a></li>";
 echo "<li><a href='register.php'>Sign Up</a></li>";
+echo "<li><a style='opacity: 0.2; pointer-events: none' href='logout.php'>Log Out</a></li>";
 echo "<li><a style='opacity: 0.2; pointer-events: none'>Update Seats</a></li>";
 echo "<li><a style='opacity: 0.2; pointer-events: none'>Buy</a></li>";
 echo "</ul>";
@@ -99,11 +90,19 @@ $rowRes = $resRes->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
 if(!$resRes || !$resOcc){
-    die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+    echo "<script type='text/javascript'>";
+    echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
+    echo "window.location.href = 'index.php';";
+    echo "</script>";
+    return;
 }
 
 if($rowRes == NULL || $rowOcc == NULL){
-    die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+    echo "<script type='text/javascript'>";
+    echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
+    echo "window.location.href = 'index.php';";
+    echo "</script>";
+    return;
 }
 
 $reserved = (int) $rowRes["Reserved"];

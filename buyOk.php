@@ -59,22 +59,34 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
     $resRes = $conn->query($reserved);
 
     if(!$resRes){
-        die("<br><br><p>There was an error in a query which collects statistics about seats. Please try again.</p>");
+        echo "<script type='text/javascript'>";
+        echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
+        echo "window.location.href = 'personalPage.php';";
+        echo "</script>";
+        return;
     }
 
     $rowRes = $resRes->fetch_assoc();
 
     if($rowRes == NULL){
-        die("<br><br><p>There was an error retrieving data from MySQLi object. Please try again.</p>");
+        echo "<script type='text/javascript'>";
+        echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
+        echo "window.location.href = 'personalPage.php';";
+        echo "</script>";
+        return;
     }
 
     $reservedMine = (int) $rowRes["Reserved"];
 
     if($myReserved === $reservedMine){ //I purchase all my seats
-        $update = "UPDATE Seat SET Status = 1 WHERE Username = '" . $_SESSION["username"] . "'";
+        $update = "UPDATE Set SET Status = 1 WHERE Username = '" . $_SESSION["username"] . "'";
 
         if(!$conn->query($update)){
-            die("<br><br><p>There was an error updating the databse. No changes were done. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('There was an error updating the database. No changes were done. Please try again.');";
+            echo "window.location.href = 'personalPage.php';";
+            echo "</script>";
+            return;
         }
 
         mysqli_commit($conn);
@@ -89,7 +101,11 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
         $delete = "DELETE FROM Seat WHERE Status = 0 AND Username = '" . $_SESSION["username"] . "'";
 
         if(!$conn->query($delete)){
-            die("<br><br><p>There was an error updating the databse. No changes were done. Please try again.</p>");
+            echo "<script type='text/javascript'>";
+            echo "window.alert('There was an error updating the database. No changes were done. Please try again.');";
+            echo "window.location.href = 'personalPage.php';";
+            echo "</script>";
+            return;
         }
 
         mysqli_commit($conn);
