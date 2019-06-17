@@ -122,11 +122,20 @@ session_write_close();
 
 $anyMine = "SELECT COUNT(*) AS Mine FROM Seat WHERE Status = 0 AND Username = '" . $_SESSION["username"] . "'";
 $resMine = $conn->query($anyMine);
-$rowMine = $resMine->fetch_assoc();
 
-if(!$resMine || $rowMine == NULL){
+if(!$resMine){
     echo "<script type='text/javascript'>";
     echo "window.alert('There was an error in a query which collects statistics about your seats. Please try again.');";
+    echo "window.location.href = 'personalPage.php';";
+    echo "</script>";
+    return;
+}
+
+$rowMine = $resMine->fetch_assoc();
+
+if($rowMine == NULL){
+    echo "<script type='text/javascript'>";
+    echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
     echo "window.location.href = 'personalPage.php';";
     echo "</script>";
     return;
@@ -175,7 +184,7 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
 
-                //window.alert(this.responseText);
+                //window.alert(this.responseText); //debug
 
                 switch (this.responseText) {
                     case "OK":

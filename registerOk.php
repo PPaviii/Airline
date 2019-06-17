@@ -123,13 +123,16 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
             $insert->close();
             $conn->close();
 
-            echo "Unexpected error.<br>";
-            echo "<br><a href='register.php'>Return to the register page</a>";
+            echo "<script type='text/javascript'>";
+            echo "window.alert('An unexpected problem has occurred. Please try again.');";
+            echo "window.location.href = 'register.php';";
+            echo "</script>";
+            return;
         }
 
     } else {
         session_write_close();
-        echo "<h2>A problem has occurred</h2>";
+        echo "<h2>A problem has occurred: no input values. You are not registered.</h2>";
         echo "<p>No change to the database were done.</p>";
         echo "<a href='register.php'>Return to the register page</a>";
     }

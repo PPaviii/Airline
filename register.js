@@ -37,6 +37,6 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-    var re = /^(([a-z]*)+([A-Z]|\d)+[a-z]+)|(([a-z]+)+([A-Z]|\d)+([a-z]*))$/;
+    var re = /^(([a-z]*)+([A-Z]|\d)+[a-z]+)|(([a-z]+)+([A-Z]|\d)+([a-z]*))$/; /* (*) = 0 or more, (+) = 1 or more */
     return Boolean(re.test(String(password)));
 }

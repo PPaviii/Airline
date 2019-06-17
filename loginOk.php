@@ -52,8 +52,8 @@ if(!isset($_SESSION["logged"]) || $_SESSION["logged"] == 0) {
         $pass = htmlentities($pass);
 
         if($user !== $_POST["user"] || $pass !== $_POST["pass"]){
-            echo "<h2>A problem has occurred with your input values. You are not logged in.</h2>";
-            echo "<a href='index.php'>Return to the home page</a>";
+            echo "<h2>A problem has occurred: no input values. You are not logged in.</h2>";
+            echo "<a href='login.php'>Return to the log in page</a>";
             return;
         }
 

@@ -31,7 +31,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
         if($num >= 1 && $num <= ROWS){
             $char = strval(preg_replace('/[0-9]+/', '', $id));
             if(ord($char) >= ord("A") && ord($char) < (ord('A') + COLUMNS)){
-                //do nothing
+                //do nothing, go on
             }else{
                 echo "InputError";
                 return;
