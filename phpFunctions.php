@@ -11,6 +11,7 @@ function start_secure_session(){
 
 function destroy_secure_session(){
     $_SESSION = array();
+    session_regenerate_id();
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
         setcookie(session_name(), '', time() - 3600*24,
