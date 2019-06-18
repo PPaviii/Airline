@@ -65,8 +65,8 @@ function printMapIndex(){
         echo"<tr>";
         for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
             $char = chr($x);
-            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' alt='Seat' style='width:50px;height:50px;'>";
-            echo $i . chr($x) . "</td>";
+            echo "<td id='$char$i' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' alt='Seat' style='width:50px;height:50px;'>";
+            echo chr($x) . $i . "</td>";
         }
         echo "</tr>";
     }
@@ -143,8 +143,8 @@ function printMapPersonalPage(){
         echo"<tr>";
         for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
             $char = chr($x);
-            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' alt='Seat' style='width:50px;height:50px;'>";
-            echo $i . chr($x) . "</td>";
+            echo "<td id='$char$i' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' alt='Seat' style='width:50px;height:50px;'>";
+            echo chr($x). $i . "</td>";
         }
         echo "</tr>";
     }

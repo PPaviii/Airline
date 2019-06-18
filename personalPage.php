@@ -303,7 +303,7 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
 
                     for(let j = 1; j <= colors[0]; j++){ //colors[0] = rows
                         for(let f = 0; f < colors[1]; f++) { //colors[1] = columns
-                            document.getElementById(j + alphabet[f]).style.background = "limegreen";
+                            document.getElementById(alphabet[f] + j).style.background = "limegreen";
                         }
                     }
 

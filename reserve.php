@@ -23,7 +23,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1){
         return;
     }
 
-    if(!preg_match('/^\d+[A-Z]$/', $id)){
+    if(!preg_match('/^[A-Z]+\d$/', $id)){
         echo "InputError";
         return;
     }else{
