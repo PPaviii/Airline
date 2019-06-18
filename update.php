@@ -1,7 +1,7 @@
 <?php
 
-require_once "phpFunctions.php";
-require_once "Global.php";
+require_once "Utility/phpFunctions.php";
+require_once "Utility/Global.php";
 
 enforceSSL();
 start_secure_session();

@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>AirFra Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/style.css">
-    <script type="text/javascript" src="jsFunctions.js"></script>
+    <script type="text/javascript" src="Utility/jsFunctions.js"></script>
     <script>
         if(!navigator.cookieEnabled){
             document.write("<p>This page needs Cookies activated to work correctly.</p>");
@@ -22,8 +22,8 @@
 
 <?php
 
-require_once "phpFunctions.php";
-require_once "Global.php";
+require_once "Utility/phpFunctions.php";
+require_once "Utility/Global.php";
 
 enforceSSL();
 
@@ -67,14 +67,14 @@ if ($conn->connect_error) {
 }
 
 echo "<div id='nav'>";
-echo "<ul>";
-echo "<li><a class='active' href='index.php'>Home Page</a></li>";
-echo "<li><a href='login.php'>Sign In</a></li>";
-echo "<li><a href='register.php'>Sign Up</a></li>";
-echo "<li><a style='opacity: 0.2; pointer-events: none' href='logout.php'>Log Out</a></li>";
-echo "<li><a style='opacity: 0.2; pointer-events: none'>Update</a></li>";
-echo "<li><a style='opacity: 0.2; pointer-events: none'>Buy</a></li>";
-echo "</ul>";
+echo "<nav>";
+echo "<a class='active' href='index.php'>Home Page</a>";
+echo "<a href='login.php'>Sign In</a>";
+echo "<a href='register.php'>Sign Up</a>";
+echo "<a style='opacity: 0.2; pointer-events: none' href='logout.php'>Log Out</a>";
+echo "<a style='opacity: 0.2; pointer-events: none'>Update</a>";
+echo "<a style='opacity: 0.2; pointer-events: none'>Buy</a>";
+echo "</nav>";
 echo "</div>";
 
 printMapIndex();

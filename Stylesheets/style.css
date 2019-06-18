@@ -32,7 +32,7 @@ td {
 #map {float: left; width: 50%}
 #info {float: right; width: 25%; margin-top: 4%}
 
-ul {
+nav {
     text-align: center;
     list-style-type: none;
     margin: 0;
@@ -42,7 +42,7 @@ ul {
     border-radius: 5px;
 }
 
-li a {
+a {
     text-align: center;
     display: block;
     color: #000;
@@ -50,7 +50,7 @@ li a {
     text-decoration: none;
 }
 
-li a:hover {
+a:hover {
     background-color: #555;
     color: white;
     border-radius: 5px;

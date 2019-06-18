@@ -18,7 +18,7 @@
 
 <?php
 
-require_once "phpFunctions.php";
+require_once "Utility/phpFunctions.php";
 enforceSSL();
 
 start_secure_session();

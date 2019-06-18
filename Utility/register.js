@@ -22,7 +22,7 @@ function check(){
 
     if(resultEmail === false || resultPassword === false){
         window.alert("Your username or password do not respect the registration policies. Try again");
-        document.getElementById("name").value = "";
+        document.getElementById("user").value = "";
         document.getElementById("pass1").value = "";
         document.getElementById("pass2").value = "";
         return false;
@@ -32,11 +32,11 @@ function check(){
 }
 
 function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return Boolean(re.test(String(email).toLowerCase()));
 }
 
 function validatePassword(password) {
-    var re = /^(([a-z]*)+([A-Z]|\d)+[a-z]+)|(([a-z]+)+([A-Z]|\d)+([a-z]*))$/; /* (*) = 0 or more, (+) = 1 or more */
+    let re = /^(([a-z]*)+([A-Z]|\d)+[a-z]+)|(([a-z]+)+([A-Z]|\d)+([a-z]*))$/; /* (*) = 0 or more, (+) = 1 or more */
     return Boolean(re.test(String(password)));
 }

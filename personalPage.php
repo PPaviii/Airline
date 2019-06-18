@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>AirFra Personal Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/style.css">
-    <script type="text/javascript" src="jsFunctions.js"></script>
+    <script type="text/javascript" src="Utility/jsFunctions.js"></script>
     <script>
         if(!navigator.cookieEnabled){
             document.write("<style>div { display:none; }</style>");
@@ -20,8 +20,8 @@
 
 <?php
 
-require_once "phpFunctions.php";
-require_once "Global.php";
+require_once "Utility/phpFunctions.php";
+require_once "Utility/Global.php";
 enforceSSL();
 
 start_secure_session();
@@ -61,14 +61,14 @@ if ($conn->connect_error) {
 }
 
 echo "<div id='nav'>";
-echo "<ul>";
-echo "<li><a class='active' href='index.php'>Home Page</a></li>";
-echo "<li><a href='login.php' style='pointer-events: none; opacity: 0.2'>Sign In</a></li>";
-echo "<li><a href='register.php' style='pointer-events: none; opacity: 0.2'>Sign Up</a></li>";
-echo "<li><a href='logout.php'>Log Out</a></li>";
-echo "<li><a title='Refresh the seats map completely' onclick='updateMap()'>Update</a></li>";
-echo "<li id='buy' style='opacity: 0.2'><a id='buyl' style='pointer-events: none' href='buyOk.php'>Buy</a></li>";
-echo "</ul>";
+echo "<nav>";
+echo "<a class='active' href='index.php'>Home Page</a></li>";
+echo "<a href='login.php' style='pointer-events: none; opacity: 0.2'>Sign In</a></li>";
+echo "<a href='register.php' style='pointer-events: none; opacity: 0.2'>Sign Up</a></li>";
+echo "<a href='logout.php'>Log Out</a></li>";
+echo "<a title='Refresh the seats map completely' onclick='updateMap()'>Update</a></li>";
+echo "<a id='buy' style='pointer-events: none; opacity: 0.2' href='buyOk.php'>Buy</a></li>";
+echo "</nav>";
 echo "</div>";
 
 printMapPersonalPage();
@@ -146,7 +146,7 @@ $mine = (int) $rowMine["Mine"];
 if($mine > 0){
     echo "<script type='text/javascript'>";
     echo "document.getElementById(\"buy\").style.opacity = \"1\";";
-    echo "document.getElementById(\"buyl\").style.pointerEvents = \"visible\";";
+    echo "document.getElementById(\"buy\").style.pointerEvents = \"visible\";";
     echo "</script>";
 }
 
@@ -171,7 +171,7 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
 <script>
     function reserveSeat(id){
 
-        var seatColor = document.getElementById(id).style.backgroundColor;
+        let seatColor = document.getElementById(id).style.backgroundColor;
 
         if (window.XMLHttpRequest) {
             // code for modern browsers
@@ -182,7 +182,7 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
         }
 
         xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState === 4 && this.status === 200) {
 
                 //window.alert(this.responseText); //debug
 
@@ -197,25 +197,25 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                         window.alert("Reservation inserted successfully!");
 
                         if(seatColor === "orange"){
-                            var reserved = document.getElementById("reserved").innerHTML;
-                            var valueR = parseInt(reserved.replace(/[^0-9\.]/g, ''), 10);
+                            let reserved = document.getElementById("reserved").innerHTML;
+                            let valueR = parseInt(reserved.replace(/[^0-9\.]/g, ''), 10);
                             valueR -= 1;
                             document.getElementById("reserved").innerHTML = "Number of seats others have reserved: " + valueR;
                         }else {
-                            var free = document.getElementById("free").innerHTML;
-                            var valueF = parseInt(free.replace(/[^0-9\.]/g, ''), 10);
+                            let free = document.getElementById("free").innerHTML;
+                            let valueF = parseInt(free.replace(/[^0-9\.]/g, ''), 10);
                             valueF -= 1;
                             document.getElementById("free").innerHTML = "Number of free seats: " + valueF;
                         }
 
-                        var reservedMe = document.getElementById("reservedMe").innerHTML;
-                        var valueRMe = parseInt(reservedMe.replace(/[^0-9\.]/g, ''), 10);
+                        let reservedMe = document.getElementById("reservedMe").innerHTML;
+                        let valueRMe = parseInt(reservedMe.replace(/[^0-9\.]/g, ''), 10);
                         valueRMe += 1;
                         document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + valueRMe;
 
                         if(valueRMe > 0){
                             document.getElementById("buy").style.opacity = "1";
-                            document.getElementById("buyl").style.pointerEvents = "visible";
+                            document.getElementById("buy").style.pointerEvents = "visible";
                         }
 
                         document.getElementById(id).style.background = "yellow";
@@ -228,19 +228,19 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                     case "UNDO":
                         window.alert("Reservation deleted successfully!");
 
-                        var free2 = document.getElementById("free").innerHTML;
-                        var valueF2 = parseInt(free2.replace(/[^0-9\.]/g, ''), 10);
+                        let free2 = document.getElementById("free").innerHTML;
+                        let valueF2 = parseInt(free2.replace(/[^0-9\.]/g, ''), 10);
                         valueF2 += 1;
                         document.getElementById("free").innerHTML = "Number of free seats: " + valueF2;
 
-                        var reservedMe2 = document.getElementById("reservedMe").innerHTML;
-                        var valueRMe2 = parseInt(reservedMe2.replace(/[^0-9\.]/g, ''), 10);
+                        let reservedMe2 = document.getElementById("reservedMe").innerHTML;
+                        let valueRMe2 = parseInt(reservedMe2.replace(/[^0-9\.]/g, ''), 10);
                         valueRMe2 -= 1;
                         document.getElementById("reservedMe").innerHTML = "Number of seats you have reserved: " + valueRMe2;
 
                         if(valueRMe2 === 0){
                             document.getElementById("buy").style.opacity = "0.2";
-                            document.getElementById("buyl").style.pointerEvents = "none";
+                            document.getElementById("buy").style.pointerEvents = "none";
                         }
 
                         document.getElementById(id).style.background = "limegreen";
@@ -249,13 +249,13 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
                     case "Purchased":
                         window.alert("Sorry, the seat has already been purchased.");
 
-                        var free3 = document.getElementById("free").innerHTML;
-                        var valueF3 = parseInt(free3.replace(/[^0-9\.]/g, ''), 10);
+                        let free3 = document.getElementById("free").innerHTML;
+                        let valueF3 = parseInt(free3.replace(/[^0-9\.]/g, ''), 10);
                         valueF3 -= 1;
                         document.getElementById("free").innerHTML = "Number of free seats: " + valueF3;
 
-                        var occupied = document.getElementById("occupied").innerHTML;
-                        var valueO = parseInt(occupied.replace(/[^0-9\.]/g, ''), 10);
+                        let occupied = document.getElementById("occupied").innerHTML;
+                        let valueO = parseInt(occupied.replace(/[^0-9\.]/g, ''), 10);
                         valueO += 1;
                         document.getElementById("occupied").innerHTML = "Number of occupied seats: " + valueO;
 
@@ -291,22 +291,22 @@ if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
         }
 
         xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState === 4 && this.status === 200) {
                 if(this.responseText === "NOT-OK"){
                     window.alert('Session expired. Log in and try again.');
                     window.location.href = 'login.php';
                 }else {
 
-                    var colors = this.responseText.split(" ");
-                    var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+                    let colors = this.responseText.split(" ");
+                    let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-                    for(var j = 1; j <= colors[0]; j++){ //colors[0] = rows
-                        for(var f = 0; f < colors[1]; f++) { //colors[1] = columns
+                    for(let j = 1; j <= colors[0]; j++){ //colors[0] = rows
+                        for(let f = 0; f < colors[1]; f++) { //colors[1] = columns
                             document.getElementById(j + alphabet[f]).style.background = "limegreen";
                         }
                     }
 
-                    for(var i = 2; i <= colors.length - 5; i++){
+                    for(let i = 2; i <= colors.length - 5; i++){
                         document.getElementById(colors[i]).style.background = colors[++i];
                     }
 

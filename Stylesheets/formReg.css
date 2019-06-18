@@ -1,6 +1,6 @@
 #nav {float: left; width: 1%; margin-top: 1%}
 
-ul {
+nav {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -9,14 +9,14 @@ ul {
     border-radius: 5px;
 }
 
-li a {
+a {
     display: block;
     color: #000;
     padding: 8px 16px;
     text-decoration: none;
 }
 
-li a:hover {
+a:hover {
     background-color: #555;
     color: white;
     border-radius: 5px;
