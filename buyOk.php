@@ -19,8 +19,8 @@
 <?php
 
 require_once "Utility/phpFunctions.php";
-enforceSSL();
 
+enforceSSL();
 start_secure_session();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {

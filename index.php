@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <noscript>
-        This page needs JavaScript activated to work.
-        <style>div { display:none; }</style>
-    </noscript>
     <meta charset="UTF-8">
     <title>AirFra Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/style.css">
-    <script type="text/javascript" src="Utility/jsFunctions.js"></script>
-    <script>
-        if(!navigator.cookieEnabled){
-            document.write("<p>This page needs Cookies activated to work correctly.</p>");
-            document.write("<style>div { display:none; }</style>");
-        }
-    </script>
+    <script src="Utility/jsFunctions.js"></script>
 </head>
 <body>
+
+<noscript>
+    This page needs JavaScript activated to work.
+    <style>div { display:none; }</style>
+</noscript>
+
+<script>
+    if(!navigator.cookieEnabled){
+        document.write("<p>This page needs Cookies activated to work correctly.</p>");
+        document.write("<style>div { display:none; }</style>");
+    }
+</script>
 
 <div>
 
@@ -26,7 +28,6 @@ require_once "Utility/phpFunctions.php";
 require_once "Utility/Global.php";
 
 enforceSSL();
-
 start_secure_session();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
@@ -90,7 +91,7 @@ $rowRes = $resRes->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
 if(!$resRes || !$resOcc){
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
     echo "window.location.href = 'index.php';";
     echo "</script>";
@@ -98,7 +99,7 @@ if(!$resRes || !$resOcc){
 }
 
 if($rowRes == NULL || $rowOcc == NULL){
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
     echo "window.location.href = 'index.php';";
     echo "</script>";

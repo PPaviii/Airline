@@ -61,12 +61,11 @@ function printMapIndex(){
 
     echo "<table>";
 
-    echo "</tr>";
     for($i = 1; $i <= ROWS; $i++){
         echo"<tr>";
         for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
             $char = chr($x);
-            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' style='background-color: limegreen' onclick='allert()'><img src='Images/seat.png' alt='Seat' style='width:50px;height:50px;'>";
             echo $i . chr($x) . "</td>";
         }
         echo "</tr>";
@@ -81,7 +80,7 @@ function printMapIndex(){
     $resIdO = $conn->query($idOccupied);
 
     if(!$resIdR || !$resIdO){
-        echo "<script type='text/javascript'>";
+        echo "<script>";
         echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
         echo "window.location.href = 'index.php';";
         echo "</script>";
@@ -91,14 +90,14 @@ function printMapIndex(){
     while ($row = $resIdR->fetch_assoc()){
 
         if($row == NULL){
-            echo "<script type='text/javascript'>";
+            echo "<script>";
             echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
             echo "window.location.href = 'index.php';";
             echo "</script>";
             return;
         }
 
-        echo "<script type='text/javascript'>";
+        echo "<script>";
         echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "orange";';
         echo "</script>";
     }
@@ -106,14 +105,14 @@ function printMapIndex(){
     while ($row = $resIdO->fetch_assoc()){
 
         if($row == NULL){
-            echo "<script type='text/javascript'>";
+            echo "<script>";
             echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
             echo "window.location.href = 'index.php';";
             echo "</script>";
             return;
         }
 
-        echo "<script type='text/javascript'>";
+        echo "<script>";
         echo 'document.getElementById(\'' . $row["Seat"] . '\').style.background = "red";';
         echo 'document.getElementById(\'' . $row["Seat"] . '\').onclick = "null"';
         echo "</script>";
@@ -140,12 +139,11 @@ function printMapPersonalPage(){
 
     echo "<table id='seatmap'>";
 
-    echo "</tr>";
     for($i = 1; $i <= ROWS; $i++){
         echo"<tr>";
         for($x = ord('A'); $x < ord('A') + COLUMNS; $x++){
             $char = chr($x);
-            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' style='width:50px;height:50px;'>";
+            echo "<td id='$i$char' onmouseover='darker(this.id, this.style.backgroundColor)' onmouseout='normal(this.id)' onclick='reserveSeat(this.id)' style='background-color: limegreen'><img src='Images/seat.png' alt='Seat' style='width:50px;height:50px;'>";
             echo $i . chr($x) . "</td>";
         }
         echo "</tr>";
@@ -160,7 +158,7 @@ function printMapPersonalPage(){
     $resIdO = $conn->query($idOccupied);
 
     if(!$resIdR || !$resIdO){
-        echo "<script type='text/javascript'>";
+        echo "<script>";
         echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
         echo "window.location.href = 'personalPage.php';";
         echo "</script>";
@@ -170,7 +168,7 @@ function printMapPersonalPage(){
     while ($row = $resIdR->fetch_assoc()){
 
         if($row == NULL){
-            echo "<script type='text/javascript'>";
+            echo "<script>";
             echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
             echo "window.location.href = 'personalPage.php';";
             echo "</script>";
@@ -181,11 +179,11 @@ function printMapPersonalPage(){
             $tmp = $_SESSION["myReserved"];
             $tmp += 1;
             $_SESSION["myReserved"] = $tmp;
-            echo "<script type='text/javascript'>";
+            echo "<script>";
             echo "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"yellow\";";
             echo "</script>";
         }else {
-            echo "<script type='text/javascript'>";
+            echo "<script>";
             echo "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"orange\";";
             echo "</script>";
         }
@@ -194,14 +192,14 @@ function printMapPersonalPage(){
     while ($row = $resIdO->fetch_assoc()){
 
         if($row == NULL){
-            echo "<script type='text/javascript'>";
+            echo "<script>";
             echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
             echo "window.location.href = 'personalPage.php';";
             echo "</script>";
             return;
         }
 
-        echo "<script type='text/javascript'>";
+        echo "<script>";
         echo "document.getElementById(\"" . $row["Seat"] . "\").style.background = \"red\";";
         echo "document.getElementById(\"" . $row["Seat"] . "\").onclick = \"null\";";
         echo "</script>";
@@ -228,7 +226,7 @@ function updateColors(){
     $resIdO = $conn->query($idOccupied);
 
     if(!$resIdR || !$resIdO){
-        echo "<script type='text/javascript'>";
+        echo "<script>";
         echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
         echo "window.location.href = 'personalPage.php';";
         echo "</script>";
@@ -245,7 +243,7 @@ function updateColors(){
     while ($row = $resIdR->fetch_assoc()){
 
         if($row == NULL){
-            echo "<script type='text/javascript'>";
+            echo "<script>";
             echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
             echo "window.location.href = 'personalPage.php';";
             echo "</script>";
@@ -266,7 +264,7 @@ function updateColors(){
     while ($row = $resIdO->fetch_assoc()){
 
         if($row == NULL){
-            echo "<script type='text/javascript'>";
+            echo "<script>";
             echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
             echo "window.location.href = 'personalPage.php';";
             echo "</script>";

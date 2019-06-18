@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <noscript>
-        <style>div { display:none; }</style>
-    </noscript>
     <meta charset="UTF-8">
     <title>Sign Up</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/formReg.css">
-    <script type="text/javascript" src="Utility/register.js"></script>
-    <script>
-        if(!navigator.cookieEnabled){
-            document.write("<style>div { display:none; }</style>");
-        }
-    </script>
+    <script src="Utility/register.js"></script>
+    <noscript>
+        <style>div { display:none; }</style>
+    </noscript>
 </head>
 <body>
+
+<script>
+    if(!navigator.cookieEnabled){
+        document.write("<style>div { display:none; }</style>");
+    }
+</script>
 
 <div>
 
@@ -23,8 +24,8 @@
 <?php
 
 require_once "Utility/phpFunctions.php";
-enforceSSL();
 
+enforceSSL();
 start_secure_session();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
@@ -34,7 +35,7 @@ if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
 $_SESSION["active_time"] = time();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "window.alert('You are already registered and logged in.');";
     echo "window.location.href = 'personalPage.php';";
     echo "</script>";

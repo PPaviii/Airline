@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <noscript>
-        <style>div { display:none; }</style>
-    </noscript>
     <meta charset="UTF-8">
     <title>AirFra Personal Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/style.css">
-    <script type="text/javascript" src="Utility/jsFunctions.js"></script>
-    <script>
-        if(!navigator.cookieEnabled){
-            document.write("<style>div { display:none; }</style>");
-        }
-    </script>
+    <script src="Utility/jsFunctions.js"></script>
+    <noscript>
+        <style>div { display:none; }</style>
+    </noscript>
 </head>
 <body>
+
+<script>
+    if(!navigator.cookieEnabled){
+        document.write("<style>div { display:none; }</style>");
+    }
+</script>
 
 <div id="main">
 
@@ -22,8 +23,8 @@
 
 require_once "Utility/phpFunctions.php";
 require_once "Utility/Global.php";
-enforceSSL();
 
+enforceSSL();
 start_secure_session();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
@@ -62,12 +63,12 @@ if ($conn->connect_error) {
 
 echo "<div id='nav'>";
 echo "<nav>";
-echo "<a class='active' href='index.php'>Home Page</a></li>";
-echo "<a href='login.php' style='pointer-events: none; opacity: 0.2'>Sign In</a></li>";
-echo "<a href='register.php' style='pointer-events: none; opacity: 0.2'>Sign Up</a></li>";
-echo "<a href='logout.php'>Log Out</a></li>";
-echo "<a title='Refresh the seats map completely' onclick='updateMap()'>Update</a></li>";
-echo "<a id='buy' style='pointer-events: none; opacity: 0.2' href='buyOk.php'>Buy</a></li>";
+echo "<a class='active' href='index.php'>Home Page</a>";
+echo "<a href='login.php' style='pointer-events: none; opacity: 0.2'>Sign In</a>";
+echo "<a href='register.php' style='pointer-events: none; opacity: 0.2'>Sign Up</a>";
+echo "<a href='logout.php'>Log Out</a>";
+echo "<a title='Refresh the seats map completely' onclick='updateMap()'>Update</a>";
+echo "<a id='buy' style='pointer-events: none; opacity: 0.2' href='buyOk.php'>Buy</a>";
 echo "</nav>";
 echo "</div>";
 
@@ -87,7 +88,7 @@ $rowResMe = $resResMe->fetch_assoc();
 $rowOcc = $resOcc->fetch_assoc();
 
 if(!$resRes || !$resResMe || !$resOcc){
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "window.alert('There was an error in a query which collects statistics about seats. Please try again.');";
     echo "window.location.href = 'personalPage.php';";
     echo "</script>";
@@ -95,7 +96,7 @@ if(!$resRes || !$resResMe || !$resOcc){
 }
 
 if($rowRes == NULL || $rowResMe == NULL || $rowOcc == NULL){
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
     echo "window.location.href = 'personalPage.php';";
     echo "</script>";
@@ -124,7 +125,7 @@ $anyMine = "SELECT COUNT(*) AS Mine FROM Seat WHERE Status = 0 AND Username = '"
 $resMine = $conn->query($anyMine);
 
 if(!$resMine){
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "window.alert('There was an error in a query which collects statistics about your seats. Please try again.');";
     echo "window.location.href = 'personalPage.php';";
     echo "</script>";
@@ -134,7 +135,7 @@ if(!$resMine){
 $rowMine = $resMine->fetch_assoc();
 
 if($rowMine == NULL){
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "window.alert('There was an error retrieving data from MySQLi object. Please try again.');";
     echo "window.location.href = 'personalPage.php';";
     echo "</script>";
@@ -144,7 +145,7 @@ if($rowMine == NULL){
 $mine = (int) $rowMine["Mine"];
 
 if($mine > 0){
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "document.getElementById(\"buy\").style.opacity = \"1\";";
     echo "document.getElementById(\"buy\").style.pointerEvents = \"visible\";";
     echo "</script>";
@@ -153,14 +154,14 @@ if($mine > 0){
 $conn->close();
 
 if(isset($_SESSION["ok"]) && $_SESSION["ok"] == 1){
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "window.alert('The seats were purchased correctly.');";
     echo "window.location.href = 'index.php';";
     echo "</script>";
 }
 
 if(isset($_SESSION["notok"]) && $_SESSION["notok"] == 1){
-    echo "<script type='text/javascript'>";
+    echo "<script>";
     echo "window.alert('Purchase cannot be completed, someone stolen you at least one seat!');";
     echo "window.location.href = 'index.php';";
     echo "</script>";
