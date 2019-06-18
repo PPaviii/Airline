@@ -9,7 +9,7 @@
 <body>
 
 <noscript>
-    <p>This page needs JavaScript activated to work.</p>
+    <p>This page needs JavaScri pt activated to work.</p>
     <style>div { display:none; }</style>
 </noscript>
 
@@ -27,7 +27,6 @@
 require_once "Utility/phpFunctions.php";
 require_once "Utility/Global.php";
 
-enforceSSL();
 start_secure_session();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {
