@@ -9,7 +9,7 @@
 <body>
 
 <noscript>
-    This page needs JavaScript activated to work.
+    <p>This page needs JavaScript activated to work.</p>
     <style>div { display:none; }</style>
 </noscript>
 
