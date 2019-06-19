@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <title>AirFra Home Page</title>
     <link rel="stylesheet" type="text/css" href="Stylesheets/style.css">
+    <noscript>
+        <style>div { display:none; }</style>
+    </noscript>
     <script src="Utility/jsFunctions.js"></script>
 </head>
 <body>
 
 <noscript>
-    <p>This page needs JavaScri pt activated to work.</p>
-    <style>div { display:none; }</style>
+    <p>This page needs JavaScript activated to work.</p>
 </noscript>
 
 <script>
@@ -27,6 +29,7 @@
 require_once "Utility/phpFunctions.php";
 require_once "Utility/Global.php";
 
+enforceSSL();
 start_secure_session();
 
 if(isset($_SESSION["logged"]) && $_SESSION["logged"] == 1) {

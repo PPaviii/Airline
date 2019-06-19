@@ -11,8 +11,13 @@
 </head>
 <body>
 
+<noscript>
+    <p>This page needs JavaScript activated to work.</p>
+</noscript>
+
 <script>
     if(!navigator.cookieEnabled){
+        document.write("<p>This page needs Cookies activated to work correctly.</p>");
         document.write("<style>div { display:none; }</style>");
     }
 </script>
